@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Search Results List</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            background-color: #f2f2f7;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%),
+                radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+            min-height: max(884px, 100dvh);
+            color: #1c1c1e;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-atom {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .glass-toolbar {
+            background: rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .glass-card-horizontal {
+             background: rgba(255, 255, 255, 0.55);
+             border: 1px solid rgba(255, 255, 255, 0.5);
+             backdrop-filter: blur(25px);
+             -webkit-backdrop-filter: blur(25px);
+             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+        .glass-chip {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        .btn-primary-gloss {
+            background: linear-gradient(180deg, #FF7A45 0%, #FF5E2B 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 14px rgba(255, 94, 43, 0.35);
+            border: 0.5px solid rgba(255, 94, 43, 0.1);
+        }
+        .mesh-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 220, 200, 0.6), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(200, 230, 255, 0.6), transparent 40%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased">
+<div class="w-full max-w-md glass-panel min-h-screen flex flex-col relative overflow-hidden rounded-none sm:rounded-[3.5rem] sm:my-8 sm:h-[95vh] sm:border-[1px] sm:border-white/60 ring-1 ring-white/40 shadow-2xl">
+<div class="mesh-bg"></div>
+<div class="sticky top-0 z-50 bg-white/60 backdrop-blur-xl border-b border-white/20">
+<div class="flex items-center p-4 justify-between gap-3">
+<button class="text-primary hover:text-primary/80 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+<span class="material-symbols-outlined font-medium">arrow_back_ios_new</span>
+</button>
+<div class="flex-1 relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-gray-500 text-[20px]">search</span>
+</div>
+<input class="block w-full pl-10 pr-10 py-2.5 border-0 rounded-xl leading-5 bg-white/60 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-white sm:text-sm shadow-sm transition-all font-medium" type="text" value="Burgers"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
+<span class="material-symbols-outlined text-gray-400 text-[18px] hover:text-gray-600">close</span>
+</div>
+</div>
+<button class="size-10 rounded-full bg-white/70 hover:bg-white shadow-sm flex items-center justify-center transition-all text-gray-600 border border-white/50">
+<span class="material-symbols-outlined filled text-[20px]">tune</span>
+</button>
+</div>
+<div class="px-4 pb-3 flex gap-2 overflow-x-auto no-scrollbar">
+<div class="glass-chip px-3 py-1.5 rounded-full flex items-center gap-1.5 shrink-0 shadow-sm">
+<span class="text-[12px] font-semibold text-primary">Open Now</span>
+<button class="flex items-center text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+<div class="glass-chip px-3 py-1.5 rounded-full flex items-center gap-1.5 shrink-0 shadow-sm">
+<span class="text-[12px] font-semibold text-primary">Rating 4.5+</span>
+<button class="flex items-center text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+<div class="glass-chip px-3 py-1.5 rounded-full flex items-center gap-1.5 shrink-0 shadow-sm bg-white/30 border-white/40">
+<span class="text-[12px] font-medium text-gray-600">Price</span>
+<span class="material-symbols-outlined text-[14px] text-gray-500">expand_more</span>
+</div>
+<div class="glass-chip px-3 py-1.5 rounded-full flex items-center gap-1.5 shrink-0 shadow-sm bg-white/30 border-white/40">
+<span class="text-[12px] font-medium text-gray-600">Dietary</span>
+<span class="material-symbols-outlined text-[14px] text-gray-500">expand_more</span>
+</div>
+</div>
+<div class="glass-toolbar h-12 px-5 flex items-center justify-between">
+<div class="flex items-center gap-1 cursor-pointer group">
+<span class="text-[13px] text-gray-500 font-medium">Sort:</span>
+<span class="text-[13px] text-gray-900 font-bold group-hover:text-primary transition-colors">Recommended</span>
+<span class="material-symbols-outlined text-[16px] text-gray-900 group-hover:text-primary transition-colors">arrow_drop_down</span>
+</div>
+<div class="flex items-center gap-2 bg-black/5 p-1 rounded-lg">
+<button class="px-3 py-1 bg-white shadow-sm rounded-md text-[11px] font-bold text-gray-900 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">list</span> List
+                    </button>
+<button class="px-3 py-1 text-[11px] font-medium text-gray-500 flex items-center gap-1 hover:text-gray-900">
+<span class="material-symbols-outlined text-[14px]">map</span> Map
+                    </button>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar relative">
+<div class="px-5 py-4 space-y-4">
+<p class="text-[13px] text-gray-500 font-medium ml-1">142 restaurants found</p>
+<div class="glass-card-horizontal p-3 rounded-[24px] flex gap-4 h-[120px] relative group cursor-pointer transition-transform active:scale-[0.98]">
+<div class="w-[100px] h-full rounded-2xl overflow-hidden relative shrink-0 shadow-inner">
+<img alt="Food" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIvS-G-S1hzW9_E_KHLC68kiLtWTC_H0R_W8lHCo1dfnFu83fsqULEKDJK8aj_vCjXO3zNbVK60Jv0rJXW6HBUAJglR1AexIpPis_QLz4PTZyPJHxYCBdn3QCOVm2LRL05wnqx_30qCe2c9z_lzvbnJdMxxw2uDY8EMEGJlxQaDVly4z4klJmh4hlLz6pqomjrK_ihIB0HklvWxUugfJMBbMFWuSxP4Bb56-yX_Q6pSNJOJ7UfSWSWmthXKNLlv0Y5UmCxHgcGBW4"/>
+<div class="absolute top-2 left-2 size-6 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px] filled text-red-500">favorite</span>
+</div>
+</div>
+<div class="flex-1 py-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="text-[16px] font-bold text-gray-900 leading-tight mb-1">Burger King Deluxe</h3>
+<div class="bg-green-100 text-green-700 px-1.5 py-0.5 rounded text-[10px] font-bold border border-green-200 shrink-0">
+                                    4.8 ★
+                                </div>
+</div>
+<p class="text-[12px] text-gray-500 font-medium">American • Fast Food • $$</p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-2">
+<span class="bg-green-500/10 text-green-700 border border-green-500/20 px-2 py-0.5 rounded-full text-[10px] font-bold backdrop-blur-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">local_shipping</span> Free Delivery
+                                </span>
+<span class="text-[11px] text-gray-400 font-medium">15-25 min</span>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-card-horizontal p-3 rounded-[24px] flex gap-4 h-[120px] relative group cursor-pointer transition-transform active:scale-[0.98]">
+<div class="w-[100px] h-full rounded-2xl overflow-hidden relative shrink-0 shadow-inner bg-gray-100">
+<div class="absolute inset-0 bg-gradient-to-br from-orange-100 to-orange-50 flex items-center justify-center">
+<span class="text-[32px]">🍔</span>
+</div>
+<div class="absolute top-2 left-2 size-6 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-gray-400">favorite</span>
+</div>
+</div>
+<div class="flex-1 py-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="text-[16px] font-bold text-gray-900 leading-tight mb-1">The Patty Joint</h3>
+<div class="bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded text-[10px] font-bold border border-gray-200 shrink-0">
+                                    4.2 ★
+                                </div>
+</div>
+<p class="text-[12px] text-gray-500 font-medium">Burgers • Fries • $</p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-2">
+<span class="text-[11px] text-gray-500 font-medium bg-gray-100/50 px-2 py-0.5 rounded-full border border-gray-200/50">
+                                    $1.99 Delivery
+                                </span>
+<span class="text-[11px] text-gray-400 font-medium">30-45 min</span>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-card-horizontal p-3 rounded-[24px] flex gap-4 h-[120px] relative group cursor-pointer transition-transform active:scale-[0.98]">
+<div class="w-[100px] h-full rounded-2xl overflow-hidden relative shrink-0 shadow-inner">
+<img alt="Food" class="w-full h-full object-cover grayscale-[20%]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrTAbWkngsaWBd_eCoPqKD3VNe9NgtawbK7ttK39xPAlk5EDLkNcoEU_FzatGZaUokwVy1xh9EoeoeiVmGeGogKF_ns6UhnHsJSBoVyEg3LMbpXOSAXRgl7d1d_QmyjMf0lKw5DJN64xiIxrJNX-8B0bcLj78i8IYQHZEmad9NK9_TG118pFB5g4k1WBesBxGuWMEYfg-fw9v345KOsh_TpXa7YNywnsyOG-FUsIOuIiOQkJ2Sslx_1_ifUSFwXyUWMDGgreWk2Vk"/>
+<div class="absolute top-2 left-2 size-6 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-gray-400">favorite</span>
+</div>
+</div>
+<div class="flex-1 py-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="text-[16px] font-bold text-gray-900 leading-tight mb-1">Green Leaf Kitchen</h3>
+<div class="bg-green-100 text-green-700 px-1.5 py-0.5 rounded text-[10px] font-bold border border-green-200 shrink-0">
+                                    4.9 ★
+                                </div>
+</div>
+<p class="text-[12px] text-gray-500 font-medium">Healthy • Vegan • $$$</p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-2">
+<span class="bg-green-500/10 text-green-700 border border-green-500/20 px-2 py-0.5 rounded-full text-[10px] font-bold backdrop-blur-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">local_shipping</span> Free Delivery
+                                </span>
+<span class="text-[11px] text-gray-400 font-medium">20-30 min</span>
+</div>
+<span class="bg-orange-100 text-orange-700 text-[10px] font-bold px-1.5 py-0.5 rounded border border-orange-200">Promo</span>
+</div>
+</div>
+</div>
+<div class="glass-card-horizontal p-3 rounded-[24px] flex gap-4 h-[120px] relative group cursor-pointer transition-transform active:scale-[0.98]">
+<div class="w-[100px] h-full rounded-2xl overflow-hidden relative shrink-0 shadow-inner bg-gray-50">
+<div class="absolute inset-0 bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center">
+<span class="text-[32px]">🥩</span>
+</div>
+<div class="absolute top-2 left-2 size-6 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-gray-400">favorite</span>
+</div>
+</div>
+<div class="flex-1 py-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="text-[16px] font-bold text-gray-900 leading-tight mb-1">Steakhouse Prime</h3>
+<div class="bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded text-[10px] font-bold border border-gray-200 shrink-0">
+                                    4.6 ★
+                                </div>
+</div>
+<p class="text-[12px] text-gray-500 font-medium">Steak • Grill • $$$$</p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-2">
+<span class="text-[11px] text-gray-500 font-medium bg-gray-100/50 px-2 py-0.5 rounded-full border border-gray-200/50">
+                                    $4.99 Delivery
+                                </span>
+<span class="text-[11px] text-gray-400 font-medium">45-60 min</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="h-20"></div>
+</div>
+</div>
+
+</body></html>

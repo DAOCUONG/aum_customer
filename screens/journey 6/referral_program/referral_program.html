@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Referral Program</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                        "success-glass": "rgba(52, 199, 89, 0.15)",
+                        "success-border": "rgba(52, 199, 89, 0.3)",
+                        "success-text": "#34C759",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            background-color: #f2f2f7;background-image: 
+                radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%),
+                radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+            min-height: max(884px, 100dvh);
+            color: #1c1c1e;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-atom {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .glass-dashed {
+            background: rgba(255, 255, 255, 0.3);
+            border: 1.5px dashed rgba(255, 94, 43, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .btn-primary-gloss {
+            background: linear-gradient(180deg, #FF7A45 0%, #FF5E2B 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 14px rgba(255, 94, 43, 0.35);
+            border: 0.5px solid rgba(255, 94, 43, 0.1);
+        }
+        .btn-secondary-glass {
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .mesh-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 220, 200, 0.6), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(200, 230, 255, 0.6), transparent 40%);
+        }
+        .crystal-box {
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        .crystal-shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.4) 100%);
+            z-index: 10;
+            pointer-events: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased">
+<div class="w-full max-w-md glass-panel min-h-screen flex flex-col relative overflow-hidden rounded-none sm:rounded-[3.5rem] sm:my-8 sm:h-[95vh] sm:border-[1px] sm:border-white/60 ring-1 ring-white/40 shadow-2xl">
+<div class="mesh-bg"></div>
+<div class="sticky top-0 z-50 border-b border-white/20 bg-white/40 backdrop-blur-xl">
+<div class="flex items-center p-4 justify-between">
+<button class="text-blue-500 hover:text-blue-600 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+<span class="material-symbols-outlined font-normal">arrow_back_ios_new</span>
+</button>
+<h2 class="text-black text-[17px] font-semibold leading-tight tracking-[-0.01em] flex-1 text-center pr-10">Invite Friends</h2>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto pb-24 no-scrollbar">
+<div class="px-6 pt-6 pb-2 relative">
+<div class="flex flex-col items-center justify-center mb-8 relative">
+<div class="w-48 h-48 relative mb-6">
+<div class="absolute inset-0 bg-gradient-to-tr from-blue-300/30 to-primary/30 rounded-full blur-[40px] animate-pulse"></div>
+<div class="relative w-full h-full flex items-center justify-center">
+<div class="w-32 h-32 bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-md rounded-3xl shadow-glass-strong border border-white/60 transform rotate-12 relative overflow-hidden flex items-center justify-center z-10">
+<div class="absolute inset-0 bg-gradient-to-br from-white via-transparent to-transparent opacity-80"></div>
+<span class="text-6xl filter drop-shadow-md transform -rotate-12">🎁</span>
+</div>
+<div class="w-24 h-24 bg-gradient-to-br from-primary/60 to-primary/10 backdrop-blur-md rounded-2xl shadow-glass absolute -bottom-2 -left-2 transform -rotate-6 z-0 border border-white/40"></div>
+<div class="absolute top-0 right-0 w-8 h-8 bg-white rounded-full blur-xl opacity-80"></div>
+</div>
+</div>
+<h1 class="text-[28px] leading-tight font-bold text-center text-gray-900 mb-2 tracking-tight">
+                        Give <span class="text-primary">$10</span>,<br/>Get <span class="text-primary">1000 Points!</span>
+</h1>
+<p class="text-center text-gray-500 text-[15px] leading-relaxed max-w-[280px]">
+                        Share your unique code with friends. They get a discount, and you earn rewards.
+                    </p>
+</div>
+<div class="glass-dashed rounded-2xl p-4 mb-8 flex flex-col items-center gap-3 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none"></div>
+<span class="text-[11px] uppercase tracking-widest text-gray-500 font-semibold">Your Referral Code</span>
+<div class="flex items-center justify-between w-full bg-white/40 rounded-xl pl-4 pr-1 py-1 border border-white/50 shadow-inner">
+<span class="text-lg font-bold tracking-wider text-gray-800 font-mono">SARAH-J24</span>
+<button class="btn-primary-gloss text-white px-4 py-2 rounded-lg text-xs font-bold shadow-md hover:brightness-110 active:scale-95 transition-all flex items-center gap-1">
+                            Copy <span class="material-symbols-outlined text-[14px]">content_copy</span>
+</button>
+</div>
+</div>
+<div class="mb-10">
+<div class="flex justify-center gap-6">
+<button class="flex flex-col items-center gap-2 group">
+<div class="size-14 glass-atom rounded-full flex items-center justify-center shadow-lg group-active:scale-95 transition-all hover:bg-white/70">
+<span class="material-symbols-outlined text-green-600 text-[26px]">chat_bubble</span>
+</div>
+<span class="text-xs font-medium text-gray-600">Messages</span>
+</button>
+<button class="flex flex-col items-center gap-2 group">
+<div class="size-14 glass-atom rounded-full flex items-center justify-center shadow-lg group-active:scale-95 transition-all hover:bg-white/70">
+<span class="material-symbols-outlined text-blue-500 text-[26px]">mail</span>
+</div>
+<span class="text-xs font-medium text-gray-600">Email</span>
+</button>
+<button class="flex flex-col items-center gap-2 group">
+<div class="size-14 glass-atom rounded-full flex items-center justify-center shadow-lg group-active:scale-95 transition-all hover:bg-white/70">
+<span class="material-symbols-outlined text-green-500 text-[26px]">call</span>
+</div>
+<span class="text-xs font-medium text-gray-600">WhatsApp</span>
+</button>
+<button class="flex flex-col items-center gap-2 group">
+<div class="size-14 glass-atom rounded-full flex items-center justify-center shadow-lg group-active:scale-95 transition-all hover:bg-white/70">
+<span class="material-symbols-outlined text-gray-500 text-[26px]">ios_share</span>
+</div>
+<span class="text-xs font-medium text-gray-600">More</span>
+</button>
+</div>
+</div>
+<div class="mb-6">
+<div class="flex items-center justify-between mb-4 px-1">
+<h3 class="text-[15px] font-bold text-gray-900">Your Referrals</h3>
+<span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-md border border-primary/10">3 Pending</span>
+</div>
+<div class="space-y-3">
+<div class="glass-atom p-3 rounded-2xl flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-sm ring-2 ring-white shadow-sm">
+                                JD
+                            </div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-gray-900">John Doe</span>
+<span class="text-[11px] text-gray-500">Invited 2 days ago</span>
+</div>
+</div>
+<div class="bg-success-glass border border-success-border text-success-text px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide backdrop-blur-md shadow-sm">
+                            Joined
+                        </div>
+</div>
+<div class="glass-atom p-3 rounded-2xl flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-sm ring-2 ring-white shadow-sm">
+                                MK
+                            </div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-gray-900">Mike K.</span>
+<span class="text-[11px] text-gray-500">Invited yesterday</span>
+</div>
+</div>
+<div class="bg-gray-100/50 border border-gray-200 text-gray-500 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide backdrop-blur-md">
+                            Pending
+                        </div>
+</div>
+<div class="glass-atom p-3 rounded-2xl flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-sm ring-2 ring-white shadow-sm">
+                                AS
+                            </div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-gray-900">Anna Smith</span>
+<span class="text-[11px] text-gray-500">Invited 1 week ago</span>
+</div>
+</div>
+<div class="bg-success-glass border border-success-border text-success-text px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide backdrop-blur-md shadow-sm">
+                            Joined
+                        </div>
+</div>
+<div class="glass-atom p-3 rounded-2xl flex items-center justify-between shadow-sm opacity-60">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm ring-2 ring-white shadow-sm">
+                                TR
+                            </div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-gray-900">Tom R.</span>
+<span class="text-[11px] text-gray-500">Reminder sent</span>
+</div>
+</div>
+<div class="bg-gray-100/50 border border-gray-200 text-gray-500 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide backdrop-blur-md">
+                            Pending
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Completion and Rating - Foodie Express</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                        "success": "#34C759",
+                        "star": "#FFD60A",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'glow-success': '0 0 30px rgba(52, 199, 89, 0.4)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            background-color: #f2f2f7;background-image: 
+                radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%),
+                radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+            min-height: max(884px, 100dvh);
+            color: #1c1c1e;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-atom {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .glass-input {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+        }
+        .btn-primary-gloss {
+            background: linear-gradient(180deg, #FF7A45 0%, #FF5E2B 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 14px rgba(255, 94, 43, 0.35);
+            border: 0.5px solid rgba(255, 94, 43, 0.1);
+        }
+        .mesh-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 220, 200, 0.6), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(200, 230, 255, 0.6), transparent 40%);
+        }
+        .frosted-wireframe {
+             background: rgba(255, 255, 255, 0.3);
+             backdrop-filter: blur(10px);
+             border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .rating-glass {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+        .star-gold {
+            background: linear-gradient(135deg, #FFD60A 0%, #FF9F0A 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(255, 214, 10, 0.3);
+        }
+        .star-empty {
+            color: rgba(0,0,0,0.1);
+            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased">
+<div class="w-full max-w-md glass-panel min-h-screen flex flex-col relative overflow-hidden rounded-none sm:rounded-[3.5rem] sm:my-8 sm:h-[95vh] sm:border-[1px] sm:border-white/60 ring-1 ring-white/40 shadow-2xl">
+<div class="mesh-bg"></div>
+<div class="sticky top-0 z-50 border-b border-white/20 bg-white/40 backdrop-blur-xl">
+<div class="flex items-center p-4 pb-4 justify-between">
+<button class="text-gray-500 hover:text-gray-900 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/40 transition-colors">
+<span class="material-symbols-outlined font-normal">close</span>
+</button>
+<h2 class="text-black text-[17px] font-semibold leading-tight tracking-[-0.01em] flex-1 text-center pr-10">Order Complete</h2>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto pb-32 no-scrollbar px-6 pt-4">
+<div class="flex flex-col items-center justify-center mb-8 mt-4 relative">
+<div class="absolute inset-0 bg-success/20 blur-[60px] rounded-full scale-150 pointer-events-none"></div>
+<div class="size-24 rounded-full glass-atom bg-success/10 border border-success/30 flex items-center justify-center shadow-glow-success mb-6 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-tr from-success/5 to-white/40 opacity-50"></div>
+<span class="material-symbols-outlined text-success text-[48px] font-bold drop-shadow-sm relative z-10">check_circle</span>
+</div>
+<h1 class="text-3xl font-bold text-gray-900 text-center tracking-tight mb-2">Delivered! Enjoy! 🎉</h1>
+<p class="text-gray-500 text-center font-medium">Order #29384 • 12:42 PM</p>
+</div>
+<div class="glass-atom rounded-[2rem] p-6 mb-8 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-orange-100/50 rounded-full blur-3xl -mr-10 -mt-10"></div>
+<div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-200/50">
+<div class="size-14 rounded-2xl bg-white shadow-sm flex items-center justify-center p-2 relative overflow-hidden border border-white/60">
+<img alt="Restaurant Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5Ps6zygRrrSHSC9ALuJb0KRQe1_pSyS_S-OiXdPZCtIekB67FtwO1EPnGM2oblKfYgwv94jaAC0_uxUxXCBHFRLUNzyS_02hWnptkKXK9ZySofCfPf4muS46Bubhgu04D7kGEmC7YBDSwfllMTHpZNTGccWYCv2TayMyeRK2_uU5NZIYZiXeE_-lB3svmEaAPnjHDYssYqKmH8a6JdV-Wy8gqX4du1qtlpUJL3PfgFln3p3Xq_7aTD-CB9b5ac3H7l4kpumJ4S84"/>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900">Burger King</h3>
+<p class="text-xs text-gray-500 font-medium">742 Evergreen Terrace</p>
+</div>
+<div class="ml-auto">
+<button class="text-primary text-sm font-semibold hover:underline">Receipt</button>
+</div>
+</div>
+<div class="space-y-4 mb-2">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<span class="flex items-center justify-center size-5 bg-primary/10 text-primary text-[10px] font-bold rounded">1</span>
+<span class="text-sm font-medium text-gray-800">Double Whopper Meal</span>
+</div>
+<span class="text-sm font-medium text-gray-600">$14.50</span>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<span class="flex items-center justify-center size-5 bg-primary/10 text-primary text-[10px] font-bold rounded">1</span>
+<span class="text-sm font-medium text-gray-800">Chicken Fries (9pc)</span>
+</div>
+<span class="text-sm font-medium text-gray-600">$5.20</span>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<span class="flex items-center justify-center size-5 bg-primary/10 text-primary text-[10px] font-bold rounded">2</span>
+<span class="text-sm font-medium text-gray-800">Oreo Shake Medium</span>
+</div>
+<span class="text-sm font-medium text-gray-600">$8.40</span>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-dashed border-gray-300 flex justify-between items-end">
+<span class="text-xs text-gray-500 font-medium">Total Paid</span>
+<span class="text-lg font-bold text-gray-900">$28.10</span>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-4 mb-8">
+<div class="rating-glass rounded-3xl p-5 flex flex-col items-center justify-center text-center relative overflow-hidden">
+<div class="absolute inset-0 bg-white/20 backdrop-blur-sm -z-10"></div>
+<h3 class="text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wider opacity-70">Rate Your Meal</h3>
+<div class="flex gap-3 text-2xl">
+<span class="material-symbols-outlined filled star-gold">star</span>
+<span class="material-symbols-outlined filled star-gold">star</span>
+<span class="material-symbols-outlined filled star-gold">star</span>
+<span class="material-symbols-outlined filled star-gold">star</span>
+<span class="material-symbols-outlined star-empty">star</span>
+</div>
+<p class="text-xs text-gray-400 mt-2">Tap to rate</p>
+</div>
+<div class="rating-glass rounded-3xl p-5 flex items-center justify-between relative overflow-hidden">
+<div class="absolute inset-0 bg-white/20 backdrop-blur-sm -z-10"></div>
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-gray-200 overflow-hidden ring-2 ring-white shadow-md relative">
+<img alt="Driver" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrTAbWkngsaWBd_eCoPqKD3VNe9NgtawbK7ttK39xPAlk5EDLkNcoEU_FzatGZaUokwVy1xh9EoeoeiVmGeGogKF_ns6UhnHsJSBoVyEg3LMbpXOSAXRgl7d1d_QmyjMf0lKw5DJN64xiIxrJNX-8B0bcLj78i8IYQHZEmad9NK9_TG118pFB5g4k1WBesBxGuWMEYfg-fw9v345KOsh_TpXa7YNywnsyOG-FUsIOuIiOQkJ2Sslx_1_ifUSFwXyUWMDGgreWk2Vk"/>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Your Dasher</span>
+<span class="text-sm font-bold text-gray-900">Sarah J.</span>
+</div>
+</div>
+<div class="flex gap-1 text-xl">
+<span class="material-symbols-outlined filled star-gold">star</span>
+<span class="material-symbols-outlined filled star-gold">star</span>
+<span class="material-symbols-outlined filled star-gold">star</span>
+<span class="material-symbols-outlined filled star-gold">star</span>
+<span class="material-symbols-outlined filled star-gold">star</span>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-6 pt-8 bg-gradient-to-t from-white/90 via-white/80 to-transparent z-20 backdrop-blur-[2px]">
+<button class="w-full btn-primary-gloss h-14 rounded-2xl text-white text-[17px] font-bold shadow-xl shadow-primary/20 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined">refresh</span>
+            Reorder This Meal
+        </button>
+<button class="w-full mt-3 h-10 rounded-xl text-gray-500 text-[15px] font-medium hover:text-gray-900 hover:bg-white/50 transition-colors">
+            Back to Home
+        </button>
+</div>
+</div>
+</body></html>

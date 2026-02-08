@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Location Access Permission</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            background-color: #f2f2f7;background-image: 
+                radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%),
+                radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+            min-height: max(884px, 100dvh);
+            color: #1c1c1e;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-atom {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .btn-primary-gloss {
+            background: linear-gradient(180deg, #FF7A45 0%, #FF5E2B 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 14px rgba(255, 94, 43, 0.35);
+            border: 0.5px solid rgba(255, 94, 43, 0.1);
+        }
+        .mesh-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 220, 200, 0.6), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(200, 230, 255, 0.6), transparent 40%);
+        }
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px solid rgba(255, 94, 43, 0.3);
+            box-shadow: 0 0 20px rgba(255, 94, 43, 0.1);
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .pulse-ring:nth-child(2) {
+            animation-delay: 1s;
+        }
+        .pulse-ring:nth-child(3) {
+            animation-delay: 2s;
+        }
+        @keyframes pulse {
+            0% {
+                width: 60px;
+                height: 60px;
+                opacity: 0.8;
+                border-width: 2px;
+            }
+            100% {
+                width: 280px;
+                height: 280px;
+                opacity: 0;
+                border-width: 0px;
+            }
+        }
+        .pin-bounce {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased">
+<div class="w-full max-w-md glass-panel min-h-screen flex flex-col relative overflow-hidden rounded-none sm:rounded-[3.5rem] sm:my-8 sm:h-[95vh] sm:border-[1px] sm:border-white/60 ring-1 ring-white/40 shadow-2xl">
+<div class="mesh-bg"></div>
+<div class="absolute inset-0 z-0 p-6 opacity-30 blur-sm pointer-events-none flex flex-col">
+<div class="flex justify-between items-center mb-8">
+<div class="w-8 h-8 rounded-full bg-gray-400/50"></div>
+<div class="w-32 h-6 rounded-full bg-gray-400/50"></div>
+<div class="w-8 h-8 rounded-full bg-gray-400/50"></div>
+</div>
+<div class="w-full h-48 rounded-2xl bg-gray-300/40 mb-6"></div>
+<div class="w-3/4 h-8 rounded-lg bg-gray-400/50 mb-4"></div>
+<div class="w-full h-4 rounded-lg bg-gray-400/30 mb-2"></div>
+<div class="w-full h-4 rounded-lg bg-gray-400/30 mb-2"></div>
+<div class="w-2/3 h-4 rounded-lg bg-gray-400/30 mb-8"></div>
+<div class="grid grid-cols-2 gap-4">
+<div class="h-40 rounded-2xl bg-gray-300/40"></div>
+<div class="h-40 rounded-2xl bg-gray-300/40"></div>
+</div>
+</div>
+<div class="absolute inset-0 bg-black/20 backdrop-blur-[2px] z-10"></div>
+<div class="relative z-20 flex-1 flex flex-col justify-end">
+<div class="mx-4 mb-6 rounded-[2.5rem] bg-white/70 backdrop-blur-[40px] border border-white/60 shadow-glass-strong p-8 relative overflow-hidden">
+<button class="absolute top-5 right-5 w-8 h-8 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center transition-colors text-gray-500 hover:text-gray-800">
+<span class="material-symbols-outlined text-[20px] font-medium">close</span>
+</button>
+<div class="relative h-48 flex items-center justify-center mb-6">
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="pulse-ring"></div>
+<div class="pulse-ring"></div>
+<div class="pulse-ring"></div>
+</div>
+<div class="relative z-10 pin-bounce">
+<div class="w-20 h-20 rounded-full bg-gradient-to-br from-white/90 to-white/40 backdrop-blur-md border border-white shadow-lg flex items-center justify-center relative">
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-orange-400 shadow-inner flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[28px] drop-shadow-md">location_on</span>
+</div>
+<div class="absolute top-2 left-4 w-6 h-3 bg-white/40 rounded-full blur-[2px] transform -rotate-12"></div>
+</div>
+<div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-12 h-3 bg-black/10 blur-sm rounded-[100%]"></div>
+</div>
+</div>
+<div class="text-center space-y-3 mb-8">
+<h1 class="text-[24px] font-semibold text-gray-900 leading-tight">Enable Location Access</h1>
+<p class="text-[15px] text-gray-500 leading-relaxed max-w-[280px] mx-auto">
+                        To find the best restaurants near you and deliver your food accurately, we need access to your location.
+                    </p>
+</div>
+<div class="space-y-4">
+<button class="w-full btn-primary-gloss h-14 rounded-2xl text-white text-[16px] font-semibold shadow-lg active:scale-[0.98] transition-transform flex items-center justify-center gap-2 group">
+<span class="material-symbols-outlined text-[20px]">near_me</span>
+                        Allow Location Access
+                    </button>
+<button class="w-full h-12 rounded-2xl bg-white/30 hover:bg-white/50 border border-white/40 text-primary text-[15px] font-medium transition-colors flex items-center justify-center">
+                        Enter manually
+                    </button>
+</div>
+<div class="absolute -bottom-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-[50px] pointer-events-none"></div>
+<div class="absolute -top-20 -left-20 w-40 h-40 bg-blue-400/10 rounded-full blur-[50px] pointer-events-none"></div>
+</div>
+</div>
+</div>
+
+</body></html>

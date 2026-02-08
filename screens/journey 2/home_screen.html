@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Foodie Express Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            background-color: #f2f2f7;background-image: 
+                radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%),
+                radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+            min-height: max(884px, 100dvh);
+            color: #1c1c1e;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-atom {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .glass-input {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+        }
+        .btn-primary-gloss {
+            background: linear-gradient(180deg, #FF7A45 0%, #FF5E2B 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 14px rgba(255, 94, 43, 0.35);
+            border: 0.5px solid rgba(255, 94, 43, 0.1);
+        }
+        .mesh-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 220, 200, 0.6), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(200, 230, 255, 0.6), transparent 40%);
+        }
+        .glass-card-image {
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        }
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 0.5px solid rgba(255,255,255,0.5);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased">
+<div class="w-full max-w-md glass-panel min-h-screen flex flex-col relative overflow-hidden rounded-none sm:rounded-[3.5rem] sm:my-8 sm:h-[95vh] sm:border-[1px] sm:border-white/60 ring-1 ring-white/40 shadow-2xl">
+<div class="mesh-bg"></div>
+<div class="sticky top-0 z-50 bg-white/40 backdrop-blur-xl border-b border-white/20">
+<div class="h-[64px] px-5 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<button class="p-2 -ml-2 rounded-full hover:bg-white/30 transition-colors">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+<h1 class="text-xl font-bold tracking-tight bg-gradient-to-r from-primary to-orange-600 bg-clip-text text-transparent">Foodie Express</h1>
+</div>
+<div class="flex items-center gap-3">
+<button class="relative p-2 rounded-full hover:bg-white/30 transition-colors">
+<span class="material-symbols-outlined text-[24px] text-gray-700">notifications</span>
+<span class="absolute top-1.5 right-1.5 size-2.5 bg-red-500 rounded-full border border-white"></span>
+</button>
+<div class="size-9 rounded-full bg-gray-200 overflow-hidden ring-2 ring-white shadow-sm">
+<img alt="Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ1nuaYVH0xhoeTbBuj7kMmVbypT1fkMUuirk6yrgpODnFwxO_RlCMk78WDiXC6e9V2j4pxYDwpZtCtRgUIxlCEYsHaWWCFaVdDLS-WbrF59Qp1saKhu6AsmuTWqOtefyIvv89qQmpWrt4rds-JMVXqLnrZmmoMXsaFbUv_OZdpmbctAnsgxwh8O9dB6RNCG4PFI--6gHuvKQXm2puL2VTZzDZgicAeUx9cPxUoqRqLQMwwCrrOqDmZupusqBioDi5kz33NvPQ8W4"/>
+</div>
+</div>
+</div>
+<div class="px-5 pb-4 space-y-3">
+<div class="glass-atom rounded-xl py-2 px-3 flex items-center gap-2 cursor-pointer hover:bg-white/60 transition-colors">
+<span class="material-symbols-outlined text-primary text-[20px]">location_on</span>
+<div class="flex-1 min-w-0">
+<p class="text-[13px] font-medium truncate text-gray-800">Home • 123 Main St, Apt 4B</p>
+</div>
+<span class="material-symbols-outlined text-gray-400 text-[18px]">expand_more</span>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-gray-400 text-[22px]">search</span>
+</div>
+<input class="block w-full pl-11 pr-4 py-3 h-[48px] border-0 rounded-2xl leading-5 bg-white/50 backdrop-blur-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-white/70 sm:text-sm shadow-sm transition-all" placeholder="What are you craving?" type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+<button class="p-1.5 rounded-lg bg-white/50 hover:bg-white shadow-sm text-gray-600">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto pb-24 no-scrollbar">
+<div class="mt-4 px-5">
+<div class="relative w-full h-[200px] rounded-[2rem] overflow-hidden shadow-glass-strong group">
+<img alt="Pizza Offer" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxC683SBf7XxKm-JZSa4Q3TIKN4mbKfOILi1YXH2XJSma-QSC2splfe2Ls6Urgf4lTX4FWcq9VyB4rQJhrsKKbWmsvPTx345p6SDH1xw1S2FWaffFu6DnPPI9KlnKP4qu8vby_HovKT4-S9GZH04bvTSlo6IheNhB_-k6Nw8OcsHzGW5uqjsAKSNkbiL292ZeuWwu1z2tNmYBE3yOe_4FzWc-J_oafGIubgXVP0SSXMwP5pgyYme1ZLFRYVyxodihxN3gz3C1glNI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+<div class="absolute bottom-5 left-6 right-6 text-white">
+<span class="px-2 py-1 bg-primary text-white text-[10px] font-bold rounded-md uppercase tracking-wide mb-2 inline-block">Promo</span>
+<h2 class="text-2xl font-bold leading-tight mb-1">50% OFF All Pizzas</h2>
+<p class="text-sm text-white/90 font-medium">Valid until Sunday night</p>
+</div>
+<div class="absolute bottom-4 right-6 flex gap-1.5">
+<div class="w-2 h-2 rounded-full bg-white"></div>
+<div class="w-2 h-2 rounded-full bg-white/40"></div>
+<div class="w-2 h-2 rounded-full bg-white/40"></div>
+<div class="w-2 h-2 rounded-full bg-white/40"></div>
+</div>
+</div>
+</div>
+<div class="mt-8">
+<div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar px-5">
+<div class="flex-shrink-0 flex flex-col items-center gap-2">
+<div class="size-16 rounded-full bg-white shadow-glass flex items-center justify-center border border-primary/20 relative group cursor-pointer transition-transform active:scale-95">
+<span class="text-[28px]">🔥</span>
+</div>
+<span class="text-[11px] font-semibold text-gray-800">Popular</span>
+</div>
+<div class="flex-shrink-0 flex flex-col items-center gap-2">
+<div class="size-16 rounded-full glass-atom shadow-sm flex items-center justify-center cursor-pointer transition-transform active:scale-95 hover:bg-white/80">
+<span class="text-[28px]">🍔</span>
+</div>
+<span class="text-[11px] font-medium text-gray-500">Burger</span>
+</div>
+<div class="flex-shrink-0 flex flex-col items-center gap-2">
+<div class="size-16 rounded-full glass-atom shadow-sm flex items-center justify-center cursor-pointer transition-transform active:scale-95 hover:bg-white/80">
+<span class="text-[28px]">🍕</span>
+</div>
+<span class="text-[11px] font-medium text-gray-500">Pizza</span>
+</div>
+<div class="flex-shrink-0 flex flex-col items-center gap-2">
+<div class="size-16 rounded-full glass-atom shadow-sm flex items-center justify-center cursor-pointer transition-transform active:scale-95 hover:bg-white/80">
+<span class="text-[28px]">🍣</span>
+</div>
+<span class="text-[11px] font-medium text-gray-500">Sushi</span>
+</div>
+<div class="flex-shrink-0 flex flex-col items-center gap-2">
+<div class="size-16 rounded-full glass-atom shadow-sm flex items-center justify-center cursor-pointer transition-transform active:scale-95 hover:bg-white/80">
+<span class="text-[28px]">🌮</span>
+</div>
+<span class="text-[11px] font-medium text-gray-500">Mexican</span>
+</div>
+<div class="flex-shrink-0 flex flex-col items-center gap-2">
+<div class="size-16 rounded-full glass-atom shadow-sm flex items-center justify-center cursor-pointer transition-transform active:scale-95 hover:bg-white/80">
+<span class="text-[28px]">🍩</span>
+</div>
+<span class="text-[11px] font-medium text-gray-500">Dessert</span>
+</div>
+</div>
+</div>
+<div class="mt-4">
+<div class="px-5 mb-4 flex justify-between items-end">
+<h3 class="text-lg font-bold text-gray-900">Recommended for You</h3>
+<a class="text-xs font-semibold text-primary hover:text-orange-700 transition-colors" href="#">See All</a>
+</div>
+<div class="flex gap-4 overflow-x-auto pb-6 no-scrollbar px-5 snap-x snap-mandatory">
+<div class="snap-start flex-shrink-0 w-[160px] h-[220px] glass-atom rounded-[1.5rem] overflow-hidden flex flex-col relative group hover:shadow-glass-strong transition-all">
+<div class="h-[110px] w-full relative">
+<img alt="Bowl" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCb-_X-8gGramBLbAN4i_RQ4ZO2Uk6nGFw2DR3H-OvlSpMxFt71vuyKNA1zjnR974lgvCd2RSIX6Qfvhud6Y5BqxDkmoXV9JRqfLIbvfl1d83ZXiXpqxKru6maNPch-pov6XMFNnFPdUE7YCkKzQFKYLNKovkW9kvm4gE46mz1v2plUa8WhJQA79WUkMAolM7rUH2bpqSO66IolbTkOOIWDrjhcwS3e00SoVP7Q-mETjSDlWmnecEcPMoA1Kjtk1dZpv_lhP-e6jRk"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded-full text-[10px] font-bold shadow-sm">
+                                4.8 ★
+                            </div>
+</div>
+<div class="p-3 flex flex-col justify-between flex-1 bg-white/40">
+<div>
+<h4 class="font-bold text-[13px] leading-tight mb-1 text-gray-900">Green Bowl</h4>
+<p class="text-[10px] text-gray-500">Healthy • 15-20 min</p>
+</div>
+<div class="flex items-center justify-between mt-2">
+<span class="text-[12px] font-bold text-gray-900">$12.50</span>
+<button class="size-6 rounded-full bg-primary text-white flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[14px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="snap-start flex-shrink-0 w-[160px] h-[220px] glass-atom rounded-[1.5rem] overflow-hidden flex flex-col relative group hover:shadow-glass-strong transition-all">
+<div class="h-[110px] w-full relative">
+<img alt="Burger" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlcKTrYWYEz63Y2fTuRcsm0OEjPAhb8EDj6juw0GIWjcnIGvy7Vpkg_TUPce6feob2XgKwNiwcw4-5DE-Jif5p_Vv-dIBFvHKrXxpPPD7Wdc_K4VqlQD8MNjiLAlmiqPw_HeXcrDrQBlpxLvhsu5a4a77J3PXVPmwaaI0O_SIUd7oEHA1diAd2-Pr5pZ9sE_Kq2xrhP6OUCzR2jLn9XLNNIiclwdWggZt1y1kyWqCOoZOTe_N63WWe2rixWKG5QLQJ4o4fAx09x7o"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded-full text-[10px] font-bold shadow-sm">
+                                4.5 ★
+                            </div>
+</div>
+<div class="p-3 flex flex-col justify-between flex-1 bg-white/40">
+<div>
+<h4 class="font-bold text-[13px] leading-tight mb-1 text-gray-900">Classic Cheese</h4>
+<p class="text-[10px] text-gray-500">Burger • 25-30 min</p>
+</div>
+<div class="flex items-center justify-between mt-2">
+<span class="text-[12px] font-bold text-gray-900">$9.99</span>
+<button class="size-6 rounded-full bg-white text-primary border border-primary/20 flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[14px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="snap-start flex-shrink-0 w-[160px] h-[220px] glass-atom rounded-[1.5rem] overflow-hidden flex flex-col relative group hover:shadow-glass-strong transition-all">
+<div class="h-[110px] w-full relative">
+<img alt="Dessert" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-Ap2MTGQcZxI54Czv_36ZtE203Kj9jq0CgO1KA_kmuFDnB3zDLau4m-7C1WA6Of4lj5mPy-eGKvMQZDseeBwLE1U8y0iIF_6HH7DS_ta-aKMnoOhPfJWSZXppBe2Knxdyhzlymm8q-qlJbOEgMY8NxWeKEuDao7hCueUFpKVkUunH8EyOrjoiz5E00HD2EDGcoJGER1zrSz5ulnl4Ur6oA8iEICAxUpleB4dc0BhXZk568aBzy91vEYmJURTYslks8SqAnTdd8_4"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded-full text-[10px] font-bold shadow-sm">
+                                4.9 ★
+                            </div>
+</div>
+<div class="p-3 flex flex-col justify-between flex-1 bg-white/40">
+<div>
+<h4 class="font-bold text-[13px] leading-tight mb-1 text-gray-900">Berry Cake</h4>
+<p class="text-[10px] text-gray-500">Dessert • 10-15 min</p>
+</div>
+<div class="flex items-center justify-between mt-2">
+<span class="text-[12px] font-bold text-gray-900">$6.50</span>
+<button class="size-6 rounded-full bg-white text-primary border border-primary/20 flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[14px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-2">
+<div class="px-5 mb-4 flex justify-between items-end">
+<h3 class="text-lg font-bold text-gray-900">Fast &amp; Free Delivery</h3>
+</div>
+<div class="flex gap-4 overflow-x-auto pb-6 no-scrollbar px-5 snap-x snap-mandatory">
+<div class="snap-start flex-shrink-0 w-[240px] h-[140px] glass-atom rounded-[1.5rem] overflow-hidden flex relative group hover:shadow-glass-strong transition-all">
+<div class="w-[100px] h-full relative">
+<img alt="Sushi" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC19Rqw1Kbb_v7ydBDoQlLQEdQwVwmpnAvuoG-v4UnVjQHytcZgEIlmaQMca4trfIfcHlh6asHRp2MvAiHiR_HqoNsQqA5-JP3K72kACkb4kEXIusY0KrfYZmbUm8bJtOPLuWkOijaZUkbIsSvNaf5YU0CxfyxiDwk6noKcfzogUihr5tPnmtyy1-GjPlTRCHqmf-QWvjiVdlOMOZu6BaVo8YwdGN2hpWEtBeT6L7dEBaBFd08h7lWACEtdizuRuTJGA5k80TPlOUI"/>
+</div>
+<div class="p-3 flex flex-col justify-center flex-1 bg-white/40">
+<h4 class="font-bold text-[14px] leading-tight mb-1 text-gray-900">Sushi Master</h4>
+<p class="text-[10px] text-gray-500 mb-2">Japanese • Free Delivery</p>
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-[14px] text-primary">schedule</span>
+<span class="text-[10px] font-semibold text-primary">15 min</span>
+</div>
+</div>
+</div>
+<div class="snap-start flex-shrink-0 w-[240px] h-[140px] glass-atom rounded-[1.5rem] overflow-hidden flex relative group hover:shadow-glass-strong transition-all">
+<div class="w-[100px] h-full relative">
+<img alt="Burger" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAypUiy_FgKDaL3QWWEhG5VrLqttc0eEZLJhqpar6wkX1Gx8SaMjW4TRJkBbvvkQ7S2ru5hQ5_mWaGb4_Ar1_nAXpUDtg8pfl0fbzQHWVVeFuv23lW2-FN-iFV1h8lN0LlhrwgkAffAxQeS5SGGIITtBp2_05FjuhzhYjrSSh4jaJZVQGSaJlatFChxx7I9Rn2h17BKbbBYM7CELppra3OP6y2Z-zctxZV5xPtrPbLXzHKqGkXxF7Vdy_uIOpV-MlbBe7U4J3DGbHU"/>
+</div>
+<div class="p-3 flex flex-col justify-center flex-1 bg-white/40">
+<h4 class="font-bold text-[14px] leading-tight mb-1 text-gray-900">Burger King</h4>
+<p class="text-[10px] text-gray-500 mb-2">American • Free Delivery</p>
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-[14px] text-primary">schedule</span>
+<span class="text-[10px] font-semibold text-primary">25 min</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="h-10"></div> 
+</div>
+<div class="absolute bottom-0 w-full z-50">
+<div class="nav-glass mx-0 pb-6 pt-3 px-6 flex justify-between items-center text-gray-400">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined filled text-[26px]">home</span>
+</button>
+<button class="flex flex-col items-center gap-1 hover:text-gray-600 transition-colors">
+<span class="material-symbols-outlined text-[26px]">favorite</span>
+</button>
+<button class="flex flex-col items-center gap-1 -mt-8">
+<div class="size-14 rounded-full bg-primary shadow-glow flex items-center justify-center text-white border-4 border-[#f2f2f7]">
+<span class="material-symbols-outlined text-[28px]">shopping_bag</span>
+</div>
+</button>
+<button class="flex flex-col items-center gap-1 hover:text-gray-600 transition-colors">
+<span class="material-symbols-outlined text-[26px]">receipt_long</span>
+</button>
+<button class="flex flex-col items-center gap-1 hover:text-gray-600 transition-colors">
+<span class="material-symbols-outlined text-[26px]">person</span>
+</button>
+</div>
+</div>
+</div>
+
+</body></html>

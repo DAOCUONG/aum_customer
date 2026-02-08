@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order History Tracking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            background-color: #f2f2f7;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%),
+                radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+            min-height: max(884px, 100dvh);
+            color: #1c1c1e;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-atom {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .btn-primary-gloss {
+            background: linear-gradient(180deg, #FF7A45 0%, #FF5E2B 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 14px rgba(255, 94, 43, 0.35);
+            border: 0.5px solid rgba(255, 94, 43, 0.1);
+        }
+        .btn-secondary-glass {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .mesh-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 220, 200, 0.6), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(200, 230, 255, 0.6), transparent 40%);
+        }
+        .tab-underline {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #FF5E2B;
+            border-radius: 2px;
+            box-shadow: 0 -2px 6px rgba(255, 94, 43, 0.4);
+        }
+        .status-badge-delivered {
+            background: rgba(52, 199, 89, 0.15);
+            border: 1px solid rgba(52, 199, 89, 0.2);
+            color: #248A3D;
+            backdrop-filter: blur(4px);
+        }
+        .status-badge-cancelled {
+            background: rgba(255, 59, 48, 0.1);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+            color: #FF3B30;
+            backdrop-filter: blur(4px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased">
+<div class="w-full max-w-md glass-panel min-h-screen flex flex-col relative overflow-hidden rounded-none sm:rounded-[3.5rem] sm:my-8 sm:h-[95vh] sm:border-[1px] sm:border-white/60 ring-1 ring-white/40 shadow-2xl">
+<div class="mesh-bg"></div>
+<div class="sticky top-0 z-50 border-b border-white/20 bg-white/60 backdrop-blur-xl">
+<div class="flex items-center px-4 pt-14 pb-4 justify-between sm:pt-4">
+<button class="text-primary hover:text-primary/80 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/40 transition-colors backdrop-blur-sm border border-white/30 shadow-sm">
+<span class="material-symbols-outlined font-medium">arrow_back_ios_new</span>
+</button>
+<h2 class="text-black text-[17px] font-semibold leading-tight tracking-[-0.01em] flex-1 text-center pr-10">Order History</h2>
+</div>
+<div class="px-4 pb-0 mt-2">
+<div class="flex relative">
+<button class="flex flex-col items-center justify-center pb-3 pt-2 flex-1 transition-all relative group">
+<span class="text-[14px] font-semibold text-primary leading-normal tracking-wide">All</span>
+<div class="tab-underline"></div>
+</button>
+<button class="flex flex-col items-center justify-center pb-3 pt-2 flex-1 transition-all relative group">
+<span class="text-[14px] font-medium text-gray-500 hover:text-gray-800 leading-normal tracking-wide">Delivered</span>
+</button>
+<button class="flex flex-col items-center justify-center pb-3 pt-2 flex-1 transition-all relative group">
+<span class="text-[14px] font-medium text-gray-500 hover:text-gray-800 leading-normal tracking-wide">Cancelled</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto pb-24 no-scrollbar">
+<div class="sticky top-0 z-40 px-5 pt-6 pb-2">
+<div class="bg-white/40 backdrop-blur-md border border-white/40 px-4 py-1.5 rounded-full inline-block shadow-sm">
+<h3 class="text-[12px] font-semibold text-gray-600 uppercase tracking-widest">February 2026</h3>
+</div>
+</div>
+<div class="px-5 space-y-4">
+<div class="glass-atom p-4 rounded-[1.5rem] relative overflow-hidden shadow-glass hover:bg-white/60 transition-colors">
+<div class="flex items-start gap-4 mb-4">
+<div class="relative size-14 shrink-0">
+<div class="size-14 rounded-2xl bg-gray-100 overflow-hidden ring-1 ring-white/50 shadow-sm">
+<img alt="Sushi Place" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpwfw3eu_NkQhfS3KZGvAM_ylE8n_z2WSC0Bv2TVN4d-H7ne2ofMAE8g6sSxVcKvdfZvNOcPSm2UsFuKzEJE_WO5hjPlcdqKh6NqZGOSTRlHz6JhQNmVfeif9fOtpSkMY8Cgs0pr0TXbkh4S719qm8rwh8_D8I461n8m4bScBTRUV_PpOT6YK7-AR_6wGL5ccIO0FjwvRShzSZsKRKHuFP1VXeyNOv6ZggEIqP7yus_DKz2e91DQO7uevec1Mpjo3ApG4XSaYCNks"/>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-[15px] font-bold text-gray-900 leading-tight truncate pr-2">Sushi Master</h4>
+<span class="status-badge-delivered text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">check_circle</span> Delivered
+                                </span>
+</div>
+<p class="text-[12px] text-gray-500 mt-0.5">Feb 24 • 12:30 PM</p>
+<p class="text-[13px] text-gray-700 mt-1 truncate">3 items • Salmon Roll, Miso Soup, Edamame</p>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-gray-200/40 pt-3">
+<span class="text-[14px] font-bold text-gray-900">$32.50</span>
+<div class="flex gap-2">
+<button class="btn-secondary-glass px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-700 hover:bg-white/60 transition-colors">Rate</button>
+<button class="btn-primary-gloss px-3 py-1.5 rounded-lg text-white text-xs font-semibold shadow-md active:scale-95 transition-transform flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">refresh</span> Reorder
+                            </button>
+</div>
+</div>
+</div>
+<div class="glass-atom p-4 rounded-[1.5rem] relative overflow-hidden shadow-glass hover:bg-white/60 transition-colors">
+<div class="flex items-start gap-4 mb-4">
+<div class="relative size-14 shrink-0">
+<div class="size-14 rounded-2xl bg-gray-100 overflow-hidden ring-1 ring-white/50 shadow-sm">
+<img alt="Burger Joint" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAlY9q4sO60DMNVto4alI4o4YlV8at5eouKD43zXq7nPWprRFNf_OdjiWVxIoVRjLBVi5tAP0SBNi1HNW5oI3MUYLpF5NY3VUK3whh-DXnrAPR5emU0ua726-TRUrG76N-3oW9Z70-5szgtmShCtMiJxq34idmn3ICY-mKONTx8OMEcUfgl2zPGCvRQ5IaXLukYuZHOw7X-gIO-Inp-f7ad5aYpilTvyy2Gukg85c-CFJcniC7uQ7h7IPwqp1Fynuc2mIrMYo7xqA"/>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-[15px] font-bold text-gray-900 leading-tight truncate pr-2">Burger King</h4>
+<span class="status-badge-delivered text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">check_circle</span> Delivered
+                                </span>
+</div>
+<p class="text-[12px] text-gray-500 mt-0.5">Feb 18 • 7:15 PM</p>
+<p class="text-[13px] text-gray-700 mt-1 truncate">2 items • Double Whopper, Fries</p>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-gray-200/40 pt-3">
+<span class="text-[14px] font-bold text-gray-900">$24.00</span>
+<div class="flex gap-2">
+<button class="btn-secondary-glass px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-700 hover:bg-white/60 transition-colors">Rate</button>
+<button class="btn-primary-gloss px-3 py-1.5 rounded-lg text-white text-xs font-semibold shadow-md active:scale-95 transition-transform flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">refresh</span> Reorder
+                            </button>
+</div>
+</div>
+</div>
+<div class="glass-atom p-4 rounded-[1.5rem] relative overflow-hidden shadow-glass opacity-80 hover:opacity-100 transition-opacity">
+<div class="flex items-start gap-4 mb-4">
+<div class="relative size-14 shrink-0">
+<div class="size-14 rounded-2xl bg-gray-100 overflow-hidden ring-1 ring-white/50 shadow-sm grayscale">
+<img alt="Pizza Hut" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8jmp0nxbzI0C5IIl5H4stBrKPnWZHgEApd08pgjl4AqD0mZqTc5zsBlV38ITFS0f3HRhxYZ2z7enVyRRSnTzL9G4giTgXIzP2DxSTalB6GLFih8T3JOoJ-6iDodKlfHRPyl3eDNNlG-3c5irUFV-wz2JM4lv5roWlUxWM9OUoKkrBvTFegCcTDgbwU00bkOes-jewqI2OXVLWNp8QxHjDduuW_FwfG0SdxhJBrEJOYKsCSyw4ojQDjmUv-SCTXcRhmMJ4zqHc-S8"/>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-[15px] font-bold text-gray-900 leading-tight truncate pr-2">Pizza Hut</h4>
+<span class="status-badge-cancelled text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">cancel</span> Cancelled
+                                </span>
+</div>
+<p class="text-[12px] text-gray-500 mt-0.5">Feb 10 • 8:40 PM</p>
+<p class="text-[13px] text-gray-700 mt-1 truncate">1 item • Pepperoni Feast Large</p>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-gray-200/40 pt-3">
+<span class="text-[14px] font-bold text-gray-400">$18.99</span>
+<div class="flex gap-2">
+<button class="btn-secondary-glass px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-500 hover:bg-white/60 transition-colors">Help</button>
+<button class="btn-secondary-glass px-3 py-1.5 rounded-lg text-xs font-semibold text-primary hover:bg-white/60 transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">refresh</span> Reorder
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<div class="sticky top-0 z-40 px-5 pt-8 pb-2">
+<div class="bg-white/40 backdrop-blur-md border border-white/40 px-4 py-1.5 rounded-full inline-block shadow-sm">
+<h3 class="text-[12px] font-semibold text-gray-600 uppercase tracking-widest">January 2026</h3>
+</div>
+</div>
+<div class="px-5 space-y-4 mb-8">
+<div class="glass-atom p-4 rounded-[1.5rem] relative overflow-hidden shadow-glass hover:bg-white/60 transition-colors">
+<div class="flex items-start gap-4 mb-4">
+<div class="relative size-14 shrink-0">
+<div class="size-14 rounded-2xl bg-gray-100 overflow-hidden ring-1 ring-white/50 shadow-sm">
+<img alt="Thai Spice" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgA7rIYjcB5ECWxcUdnJ_ZQ0zvaEGFasS6CAmd03r0RDe_QVCl9HEx92eEUUvJZV7gJXlAlmz6YTtRJybi_wa2Vw3OPkJBEq9qM1N9NPhmp1ChKDuUuw8OS6PxSvvODA6IyuEpCwaGBFWj9eTE4QStzZrXfFV0kUD9p6ax_sb7o-AZnOG4_e3IACyZt01Cs_DbMVqB9KYI9we6JL-tXPvKCT13Ttr_uzu5szGjK3PwZq_80ysmibRmw4dfPfBoxwCBOLLlAlZacr0"/>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-[15px] font-bold text-gray-900 leading-tight truncate pr-2">Thai Spice</h4>
+<span class="status-badge-delivered text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">check_circle</span> Delivered
+                                </span>
+</div>
+<p class="text-[12px] text-gray-500 mt-0.5">Jan 28 • 1:10 PM</p>
+<p class="text-[13px] text-gray-700 mt-1 truncate">2 items • Pad Thai, Spring Rolls</p>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-gray-200/40 pt-3">
+<span class="text-[14px] font-bold text-gray-900">$21.40</span>
+<div class="flex gap-2">
+<button class="btn-secondary-glass px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-700 hover:bg-white/60 transition-colors">Rate</button>
+<button class="btn-primary-gloss px-3 py-1.5 rounded-lg text-white text-xs font-semibold shadow-md active:scale-95 transition-transform flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">refresh</span> Reorder
+                            </button>
+</div>
+</div>
+</div>
+<div class="glass-atom p-4 rounded-[1.5rem] relative overflow-hidden shadow-glass hover:bg-white/60 transition-colors">
+<div class="flex items-start gap-4 mb-4">
+<div class="relative size-14 shrink-0">
+<div class="size-14 rounded-2xl bg-gray-100 overflow-hidden ring-1 ring-white/50 shadow-sm">
+<img alt="Starbucks" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB71YwD7fZuIEmdugPn0bMiy756lBFrkKxq-cdwg8-Id3Wo4S6n7Pw7FFnHE2Vg_-ybPXqEpbV77SOQD3qsFgmzD_oEyfpjIRQOUEj_W8in7ei5gPT6NoYsbUCsCNtzxG2rMCW5O0lDOhZzMoAwPtZgHnrdp56xq6L1sjV2qn0oWbkfkJbklBMjgfv4cmWdK0l1mabPq0THE4wgf2CPF4WofUgiX0y3C8MC-Ch7AB375OOF51N37I-SinSF4BffeMK3tp3utU9pezQ"/>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-[15px] font-bold text-gray-900 leading-tight truncate pr-2">Starbucks</h4>
+<span class="status-badge-delivered text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">check_circle</span> Delivered
+                                </span>
+</div>
+<p class="text-[12px] text-gray-500 mt-0.5">Jan 15 • 9:00 AM</p>
+<p class="text-[13px] text-gray-700 mt-1 truncate">3 items • Latte, Croissant, Muffin</p>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-gray-200/40 pt-3">
+<span class="text-[14px] font-bold text-gray-900">$16.20</span>
+<div class="flex gap-2">
+<button class="btn-secondary-glass px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-700 hover:bg-white/60 transition-colors">Rate</button>
+<button class="btn-primary-gloss px-3 py-1.5 rounded-lg text-white text-xs font-semibold shadow-md active:scale-95 transition-transform flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">refresh</span> Reorder
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

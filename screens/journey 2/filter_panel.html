@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Advanced Filter Panel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>.no-scrollbar::-webkit-scrollbar {
+    display: none
+    }
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none
+    }
+body {
+    background-color: #f2f2f7;
+    background-image: radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%), radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+    min-height: max(884px, 100dvh);
+    color: #1c1c1e
+    }
+.glass-panel {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(50px) saturate(180%);
+    -webkit-backdrop-filter: blur(50px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1)
+    }
+.glass-atom {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03)
+    }
+.glass-input {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03)
+    }
+.btn-primary-gloss {
+    background: linear-gradient(180deg, #FF7A45 0%, #FF5E2B 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 4px 14px rgba(255, 94, 43, 0.35);
+    border: 0.5px solid rgba(255, 94, 43, 0.1)
+    }
+.mesh-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background: radial-gradient(circle at 15% 50%, rgba(255, 220, 200, 0.6), transparent 40%), radial-gradient(circle at 85% 30%, rgba(200, 230, 255, 0.6), transparent 40%)
+    }.custom-radio:checked {
+    background-color: #FF5E2B;
+    border-color: #FF5E2B;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBeCVPSngWeAPYrOxO-btV6SI6LOQeNCqXrh9wAEHqNREN1J2bfVA3_Wjwhr_275IPvX4WDHMUsEn6bnkdmA6cddzIIfXz9IVRyepHtIpjsI5R9yHSFY5Ma4zoPh1Xdtoxd9wEsvWVwRZCf9aH4WaGJ1bnU-bvlQTOgVKNMEaZd88gnEwDosV5qo83DuC8ZFltNhk7LSfT8dViYsPg4jPMGar8HgJid6uN-8JeOFpc4C9WLBrV5FVgOg8EdS4m1uGClQDxrj-HIge4)
+    }
+.custom-checkbox:checked {
+    background-color: #FF5E2B;
+    border-color: #FF5E2B
+    }input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent
+    }
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    margin-top: -10px
+    }
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 2px
+    }
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #FF5E2B
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased">
+<div class="w-full max-w-md glass-panel min-h-screen flex flex-col relative overflow-hidden rounded-none sm:rounded-[3.5rem] sm:my-8 sm:h-[95vh] sm:border-[1px] sm:border-white/60 ring-1 ring-white/40 shadow-2xl">
+<div class="absolute inset-0 z-0 overflow-y-auto filter blur-[6px] opacity-60 pointer-events-none">
+<div class="mesh-bg"></div>
+<div class="sticky top-0 z-50 border-b border-white/20 bg-white/70 backdrop-blur-xl">
+<div class="flex items-center p-4 pb-2 justify-between">
+<button class="text-blue-500 hover:text-blue-600 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+<span class="material-symbols-outlined font-normal">arrow_back_ios_new</span>
+</button>
+<h2 class="text-black text-[17px] font-semibold leading-tight tracking-[-0.01em] flex-1 text-center pr-10">Search Results</h2>
+</div>
+</div>
+<div class="p-6">
+<h1 class="text-3xl font-bold text-black mb-4">Restaurants</h1>
+<div class="glass-atom p-5 rounded-[2rem] mb-4"></div>
+<div class="glass-atom p-5 rounded-[2rem] mb-4"></div>
+<div class="glass-atom p-5 rounded-[2rem] mb-4"></div>
+</div>
+</div>
+<div class="absolute inset-0 bg-black/10 backdrop-blur-[2px] z-10"></div>
+<div class="absolute inset-y-0 right-0 w-[85%] z-20 flex flex-col bg-white/80 backdrop-blur-2xl rounded-l-[2.5rem] shadow-2xl border-l border-white/50">
+<div class="flex items-center justify-between px-6 py-5 border-b border-black/5 flex-shrink-0">
+<button class="text-gray-900 hover:bg-black/5 p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+<h2 class="text-[17px] font-semibold text-gray-900">Filters</h2>
+<button class="text-[15px] font-medium text-primary hover:text-orange-600 transition-colors">
+                Clear All
+            </button>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar p-6 space-y-8">
+<section>
+<h3 class="text-[13px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-1">Sort By</h3>
+<div class="space-y-3">
+<label class="flex items-center justify-between group cursor-pointer p-3 rounded-2xl hover:bg-white/40 transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-orange-100 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">thumb_up</span>
+</div>
+<span class="text-[15px] font-medium text-gray-900">Recommended</span>
+</div>
+<input checked="" class="custom-radio form-radio h-5 w-5 text-primary border-gray-300 focus:ring-primary/20 transition duration-150 ease-in-out" name="sort_by" type="radio"/>
+</label>
+<label class="flex items-center justify-between group cursor-pointer p-3 rounded-2xl hover:bg-white/40 transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+</div>
+<span class="text-[15px] font-medium text-gray-900">Fastest Delivery</span>
+</div>
+<input class="custom-radio form-radio h-5 w-5 text-primary border-gray-300 focus:ring-primary/20 transition duration-150 ease-in-out" name="sort_by" type="radio"/>
+</label>
+<label class="flex items-center justify-between group cursor-pointer p-3 rounded-2xl hover:bg-white/40 transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-green-50 flex items-center justify-center text-green-500">
+<span class="material-symbols-outlined text-[18px]">star</span>
+</div>
+<span class="text-[15px] font-medium text-gray-900">Highest Rated</span>
+</div>
+<input class="custom-radio form-radio h-5 w-5 text-primary border-gray-300 focus:ring-primary/20 transition duration-150 ease-in-out" name="sort_by" type="radio"/>
+</label>
+</div>
+</section>
+<hr class="border-black/5 mx-2"/>
+<section>
+<h3 class="text-[13px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-1">Price Range</h3>
+<div class="flex gap-3">
+<label class="flex-1 cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<div class="h-12 rounded-xl bg-white/40 border border-white/60 flex items-center justify-center text-sm font-semibold text-gray-500 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary peer-checked:shadow-lg transition-all shadow-sm">
+                            $
+                        </div>
+</label>
+<label class="flex-1 cursor-pointer">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<div class="h-12 rounded-xl bg-white/40 border border-white/60 flex items-center justify-center text-sm font-semibold text-gray-500 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary peer-checked:shadow-lg transition-all shadow-sm">
+                            $$
+                        </div>
+</label>
+<label class="flex-1 cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<div class="h-12 rounded-xl bg-white/40 border border-white/60 flex items-center justify-center text-sm font-semibold text-gray-500 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary peer-checked:shadow-lg transition-all shadow-sm">
+                            $$$
+                        </div>
+</label>
+<label class="flex-1 cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<div class="h-12 rounded-xl bg-white/40 border border-white/60 flex items-center justify-center text-sm font-semibold text-gray-500 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary peer-checked:shadow-lg transition-all shadow-sm">
+                            $$$$
+                        </div>
+</label>
+</div>
+</section>
+<hr class="border-black/5 mx-2"/>
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-[13px] font-bold text-gray-400 uppercase tracking-widest ml-1">Max Delivery Time</h3>
+<span class="text-primary font-bold text-sm bg-primary/10 px-2 py-0.5 rounded-md">45 min</span>
+</div>
+<div class="px-2 py-4">
+<div class="relative w-full h-1 bg-gray-200 rounded-full">
+<div class="absolute h-full bg-primary rounded-full" style="width: 60%"></div>
+<input class="absolute top-0 left-0 w-full h-1 appearance-none z-10 bg-transparent" max="90" min="10" type="range" value="45"/>
+</div>
+<div class="flex justify-between mt-2 text-[10px] text-gray-400 font-medium">
+<span>10 min</span>
+<span>90+ min</span>
+</div>
+</div>
+</section>
+<hr class="border-black/5 mx-2"/>
+<section>
+<h3 class="text-[13px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-1">Dietary</h3>
+<div class="flex flex-wrap gap-2">
+<label class="cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<div class="px-4 py-2 rounded-full bg-white/40 border border-white/60 text-[13px] font-medium text-gray-600 peer-checked:bg-green-500 peer-checked:text-white peer-checked:border-green-600 peer-checked:shadow-md transition-all">
+                            Vegetarian 🥗
+                        </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<div class="px-4 py-2 rounded-full bg-white/40 border border-white/60 text-[13px] font-medium text-gray-600 peer-checked:bg-green-500 peer-checked:text-white peer-checked:border-green-600 peer-checked:shadow-md transition-all">
+                            Vegan 🌱
+                        </div>
+</label>
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<div class="px-4 py-2 rounded-full bg-white/40 border border-white/60 text-[13px] font-medium text-gray-600 peer-checked:bg-green-500 peer-checked:text-white peer-checked:border-green-600 peer-checked:shadow-md transition-all">
+                            Gluten-Free 🌾
+                        </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<div class="px-4 py-2 rounded-full bg-white/40 border border-white/60 text-[13px] font-medium text-gray-600 peer-checked:bg-green-500 peer-checked:text-white peer-checked:border-green-600 peer-checked:shadow-md transition-all">
+                            Halal 🥩
+                        </div>
+</label>
+</div>
+</section>
+<hr class="border-black/5 mx-2"/>
+<section>
+<h3 class="text-[13px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-1">Offers</h3>
+<label class="flex items-center justify-between group cursor-pointer p-3 rounded-2xl bg-orange-50/50 border border-orange-100/50 hover:bg-orange-50 transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-orange-500 flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined text-[18px]">percent</span>
+</div>
+<span class="text-[15px] font-medium text-gray-900">Special Offers Only</span>
+</div>
+<div class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<div class="h-6 w-11 rounded-full bg-gray-200 peer-checked:bg-primary peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 transition-all"></div>
+<div class="absolute left-1 top-1 h-4 w-4 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5"></div>
+</div>
+</label>
+</section>
+<div class="h-24"></div> 
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-5 bg-white/80 backdrop-blur-xl border-t border-white/50 rounded-bl-[2.5rem]">
+<button class="btn-primary-gloss w-full py-4 rounded-2xl text-white font-bold text-[15px] shadow-lg active:scale-[0.98] transition-transform flex items-center justify-center gap-2">
+                Show 142 Restaurants
+            </button>
+</div>
+</div>
+</div>
+
+</body></html>

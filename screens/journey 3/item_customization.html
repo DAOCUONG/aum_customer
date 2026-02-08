@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Item Customization Modal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            background-color: #f2f2f7;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%),
+                radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+            min-height: max(884px, 100dvh);
+            color: #1c1c1e;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-modal {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(60px) saturate(180%);
+            -webkit-backdrop-filter: blur(60px) saturate(180%);
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 -10px 60px rgba(0, 0, 0, 0.15);
+        }
+        .glass-radio-container {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        .btn-primary-gloss {
+            background: linear-gradient(180deg, #FF7A45 0%, #FF5E2B 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 14px rgba(255, 94, 43, 0.35);
+            border: 0.5px solid rgba(255, 94, 43, 0.1);
+        }.custom-radio:checked + div {
+            background-color: rgba(255, 94, 43, 0.1);
+            border-color: rgba(255, 94, 43, 0.5);
+        }
+        .custom-radio:checked + div .radio-indicator {
+            border-color: #FF5E2B;
+            background-color: #FF5E2B;
+            box-shadow: 0 0 0 3px rgba(255, 94, 43, 0.2);
+        }
+        .custom-checkbox:checked + div {
+            background-color: rgba(255, 94, 43, 0.1);
+            border-color: rgba(255, 94, 43, 0.5);
+        }
+        .custom-checkbox:checked + div .checkbox-indicator {
+            background-color: #FF5E2B;
+            border-color: #FF5E2B;
+            color: white;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased overflow-hidden">
+<div class="w-full max-w-md h-screen relative overflow-hidden sm:rounded-[3.5rem] sm:my-8 sm:h-[95vh] sm:border-[1px] sm:border-white/60 ring-1 ring-white/40 shadow-2xl bg-white/30 backdrop-blur-sm">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center filter blur-md scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBlT-MLSd5Kk4ZkTKV7k-VR8763AzwMiZGTf5piJHMe7MmzrzjfAg4gjOe5L5ZNx9SDiW2f3M49FOyg4AmBlaSVLEMaArpVHbRdoN7LAH6hAHsDZzxe-b0nSyqRdbG0nWXlh6zwJTwuHEh37mHNjGdcTWOWfnA5xDgSXPxVhbdoPJydJsFFp4REx0shzuggkaLVNjqskztONvD7sEw9t_eR7davrKFgUCnbKuw3i1cBHLPdMxTnu43dcu3s25UKUtQDlyRMrSVE2xI');"></div>
+<div class="absolute inset-0 bg-white/40 mix-blend-overlay"></div>
+</div>
+<div class="absolute inset-x-0 bottom-0 top-16 z-10 glass-modal rounded-t-[2.5rem] flex flex-col shadow-2xl overflow-hidden transition-transform duration-500 ease-out translate-y-0">
+<div class="w-full flex justify-center pt-4 pb-2 flex-shrink-0">
+<div class="w-12 h-1.5 bg-gray-300/60 rounded-full backdrop-blur-md"></div>
+</div>
+<button class="absolute top-4 right-4 z-20 size-8 rounded-full bg-gray-200/50 hover:bg-gray-300/50 backdrop-blur-md flex items-center justify-center text-gray-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+<div class="flex-1 overflow-y-auto no-scrollbar pb-32">
+<div class="px-6 pt-2 pb-6">
+<div class="w-full aspect-[4/3] rounded-[2rem] overflow-hidden shadow-glass relative group">
+<img alt="Classic Cheeseburger" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpkxTNh--RC-y621_eTOlE-C3E-X1OkHCvas44yfoFIXNIMDZ-fN07Z4pQgpwnFFrlfaK-e09C3eIrM472uGJ2098Z4wRj7yNd5_dFJcH4WVHnfeXr8n_lHrd_mvaK98IUjYp5jJIN3Opg5gBfuUZz_0pEKXy1rggCTCo7u9hguNYEthn9WChWKEv3qeb_WzTeLjxgG_nzFOupNj0H5CQL4e6REpbNM_5uLkCqpEA_oCVW3V_rjebGM-YSQA928nvBzdKjDA1hL5M"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-gray-900 shadow-sm border border-white/50 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-orange-500">local_fire_department</span> Popular
+                        </div>
+</div>
+</div>
+<div class="px-6 mb-8">
+<div class="flex justify-between items-start mb-2">
+<h1 class="text-2xl font-bold text-gray-900 tracking-tight">Classic Angus Burger</h1>
+<span class="text-xl font-bold text-primary">$14.50</span>
+</div>
+<p class="text-sm text-gray-500 leading-relaxed font-medium">
+                        Juicy 100% Angus beef patty with fresh lettuce, tomatoes, onions, pickles, and our signature secret sauce.
+                    </p>
+</div>
+<div class="px-6 mb-8">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider">Patty Style</h3>
+<span class="text-[10px] bg-gray-200/50 text-gray-500 px-2 py-0.5 rounded-md font-medium">Required</span>
+</div>
+<div class="space-y-3">
+<label class="block cursor-pointer group relative">
+<input checked="" class="peer sr-only custom-radio" name="patty" type="radio"/>
+<div class="glass-radio-container p-4 rounded-2xl flex items-center justify-between transition-all duration-300 group-hover:bg-white/60">
+<div class="flex items-center gap-3">
+<div class="radio-indicator size-5 rounded-full border-2 border-gray-300 bg-transparent flex items-center justify-center transition-all duration-200">
+<div class="size-2 rounded-full bg-white opacity-0 peer-checked:opacity-100"></div>
+</div>
+<span class="text-sm font-semibold text-gray-800">Medium Rare</span>
+</div>
+</div>
+</label>
+<label class="block cursor-pointer group relative">
+<input class="peer sr-only custom-radio" name="patty" type="radio"/>
+<div class="glass-radio-container p-4 rounded-2xl flex items-center justify-between transition-all duration-300 group-hover:bg-white/60">
+<div class="flex items-center gap-3">
+<div class="radio-indicator size-5 rounded-full border-2 border-gray-300 bg-transparent flex items-center justify-center transition-all duration-200"></div>
+<span class="text-sm font-semibold text-gray-800">Medium</span>
+</div>
+</div>
+</label>
+<label class="block cursor-pointer group relative">
+<input class="peer sr-only custom-radio" name="patty" type="radio"/>
+<div class="glass-radio-container p-4 rounded-2xl flex items-center justify-between transition-all duration-300 group-hover:bg-white/60">
+<div class="flex items-center gap-3">
+<div class="radio-indicator size-5 rounded-full border-2 border-gray-300 bg-transparent flex items-center justify-center transition-all duration-200"></div>
+<span class="text-sm font-semibold text-gray-800">Well Done</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+<div class="px-6 mb-4">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider">Extra Toppings</h3>
+<span class="text-[10px] bg-gray-200/50 text-gray-500 px-2 py-0.5 rounded-md font-medium">Optional</span>
+</div>
+<div class="space-y-3">
+<label class="block cursor-pointer group relative">
+<input class="peer sr-only custom-checkbox" type="checkbox"/>
+<div class="glass-radio-container p-4 rounded-2xl flex items-center justify-between transition-all duration-300 group-hover:bg-white/60">
+<div class="flex items-center gap-3">
+<div class="checkbox-indicator size-5 rounded-md border-2 border-gray-300 bg-transparent flex items-center justify-center transition-all duration-200 text-transparent">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+<span class="text-sm font-semibold text-gray-800">Extra Cheese</span>
+</div>
+<span class="text-sm font-medium text-primary">+$1.50</span>
+</div>
+</label>
+<label class="block cursor-pointer group relative">
+<input checked="" class="peer sr-only custom-checkbox" type="checkbox"/>
+<div class="glass-radio-container p-4 rounded-2xl flex items-center justify-between transition-all duration-300 group-hover:bg-white/60">
+<div class="flex items-center gap-3">
+<div class="checkbox-indicator size-5 rounded-md border-2 border-gray-300 bg-transparent flex items-center justify-center transition-all duration-200 text-transparent">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+<span class="text-sm font-semibold text-gray-800">Bacon Strips</span>
+</div>
+<span class="text-sm font-medium text-primary">+$2.00</span>
+</div>
+</label>
+<label class="block cursor-pointer group relative">
+<input class="peer sr-only custom-checkbox" type="checkbox"/>
+<div class="glass-radio-container p-4 rounded-2xl flex items-center justify-between transition-all duration-300 group-hover:bg-white/60">
+<div class="flex items-center gap-3">
+<div class="checkbox-indicator size-5 rounded-md border-2 border-gray-300 bg-transparent flex items-center justify-center transition-all duration-200 text-transparent">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+<span class="text-sm font-semibold text-gray-800">Avocado Slices</span>
+</div>
+<span class="text-sm font-medium text-primary">+$2.50</span>
+</div>
+</label>
+</div>
+</div>
+<div class="h-24"></div>
+</div>
+<div class="absolute bottom-0 w-full glass-modal border-t-0 rounded-none z-30 p-5 pb-8">
+<div class="flex items-center gap-4">
+<div class="flex items-center bg-gray-200/50 backdrop-blur-sm rounded-xl p-1 h-[52px]">
+<button class="size-10 flex items-center justify-center rounded-lg bg-white/50 text-gray-600 shadow-sm hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<span class="w-10 text-center font-bold text-gray-900 text-lg">1</span>
+<button class="size-10 flex items-center justify-center rounded-lg bg-white/50 text-gray-600 shadow-sm hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+<button class="btn-primary-gloss flex-1 h-[52px] rounded-xl text-white font-bold text-[15px] shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2">
+<span>Add to Cart</span>
+<span class="bg-white/20 px-2 py-0.5 rounded text-[13px] font-semibold">$16.50</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

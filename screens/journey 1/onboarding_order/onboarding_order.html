@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Welcome Slide 2 Order</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            background-color: #f2f2f7;background-image: 
+                radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%),
+                radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+            min-height: max(884px, 100dvh);
+            color: #1c1c1e;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-atom {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .glass-phone {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 20px 40px -10px rgba(0,0,0,0.1), 
+                inset 0 1px 0 rgba(255,255,255,0.6);
+        }
+        .btn-primary-gloss {
+            background: linear-gradient(180deg, #FF7A45 0%, #FF5E2B 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 14px rgba(255, 94, 43, 0.35);
+            border: 0.5px solid rgba(255, 94, 43, 0.1);
+        }
+        .mesh-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 220, 200, 0.6), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(200, 230, 255, 0.6), transparent 40%);
+        }
+        .slide-indicator {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .slide-indicator.active {
+            background-color: #1c1c1e;
+            width: 24px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased items-center p-0 sm:p-4">
+<div class="w-full max-w-md glass-panel min-h-screen sm:min-h-[850px] flex flex-col relative overflow-hidden rounded-none sm:rounded-[3.5rem] shadow-2xl">
+<div class="mesh-bg"></div>
+<div class="flex justify-between items-center p-6 relative z-10">
+<div class="w-10"></div> 
+<div class="flex gap-2">
+<div class="h-1.5 w-1.5 rounded-full bg-black/20 slide-indicator"></div>
+<div class="h-1.5 w-6 rounded-full bg-black slide-indicator active"></div>
+<div class="h-1.5 w-1.5 rounded-full bg-black/20 slide-indicator"></div>
+</div>
+<button class="text-[15px] font-medium text-gray-500 hover:text-primary transition-colors w-10 text-right">Skip</button>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center relative px-6 pb-10">
+<div class="relative w-full aspect-square max-w-[340px] mb-10 flex items-center justify-center">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-blue-400/20 rounded-full blur-[60px] animate-pulse"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] bg-primary/20 rounded-full blur-[50px] translate-y-10"></div>
+<div class="glass-phone w-[240px] h-[420px] rounded-[36px] relative overflow-hidden transform -rotate-6 transition-transform duration-700 hover:rotate-0 z-10 flex flex-col">
+<div class="h-14 border-b border-white/30 flex items-center justify-between px-5 bg-white/20">
+<div class="w-12 h-3 bg-black/10 rounded-full"></div>
+<div class="size-8 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-primary">shopping_bag</span>
+</div>
+</div>
+<div class="p-4 space-y-3 flex-1 overflow-hidden">
+<div class="bg-white/40 backdrop-blur-sm p-3 rounded-2xl flex items-center gap-3 border border-white/50 shadow-sm">
+<div class="size-10 rounded-xl bg-orange-100 flex items-center justify-center text-xl shrink-0">🍔</div>
+<div class="flex-1 min-w-0">
+<div class="h-2.5 w-20 bg-black/10 rounded-full mb-1.5"></div>
+<div class="h-2 w-10 bg-black/5 rounded-full"></div>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-5 rounded-full bg-white flex items-center justify-center shadow-sm text-primary font-bold text-xs">-</div>
+<span class="text-xs font-bold text-gray-600">1</span>
+<div class="size-5 rounded-full bg-primary text-white flex items-center justify-center shadow-sm text-xs">+</div>
+</div>
+</div>
+<div class="bg-white/40 backdrop-blur-sm p-3 rounded-2xl flex items-center gap-3 border border-white/50 shadow-sm relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="size-10 rounded-xl bg-green-100 flex items-center justify-center text-xl shrink-0">🥗</div>
+<div class="flex-1 min-w-0">
+<div class="h-2.5 w-16 bg-black/10 rounded-full mb-1.5"></div>
+<div class="h-2 w-8 bg-black/5 rounded-full"></div>
+</div>
+<div class="size-5 rounded bg-primary flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+</div>
+<div class="bg-white/60 backdrop-blur-md p-3 rounded-2xl flex items-center gap-3 border border-white/60 shadow-lg scale-105 translate-y-1">
+<div class="size-10 rounded-xl bg-red-100 flex items-center justify-center text-xl shrink-0">🍕</div>
+<div class="flex-1 min-w-0">
+<div class="h-2.5 w-24 bg-black/20 rounded-full mb-1.5"></div>
+<div class="h-2 w-12 bg-black/10 rounded-full"></div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-gray-400 line-through">$18</span>
+<span class="text-xs font-bold text-primary">$15</span>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-black/5 space-y-2 px-1 opacity-60">
+<div class="flex justify-between">
+<div class="h-2 w-12 bg-black/10 rounded-full"></div>
+<div class="h-2 w-8 bg-black/10 rounded-full"></div>
+</div>
+<div class="flex justify-between">
+<div class="h-2 w-16 bg-black/10 rounded-full"></div>
+<div class="h-2 w-10 bg-black/10 rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="p-4 pt-0">
+<div class="h-10 bg-black/80 rounded-xl w-full flex items-center justify-center">
+<div class="h-2 w-20 bg-white/20 rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="absolute top-[20%] right-[10%] p-2 glass-atom rounded-xl shadow-lg rotate-12 z-20">
+<span class="text-2xl">🍩</span>
+</div>
+<div class="absolute bottom-[20%] left-[5%] p-2 glass-atom rounded-xl shadow-lg -rotate-12 z-20">
+<span class="text-2xl">🥤</span>
+</div>
+<div class="absolute top-[40%] left-[-5%] size-8 glass-atom rounded-full flex items-center justify-center shadow-md z-0 opacity-80">
+<span class="material-symbols-outlined text-green-500 text-sm">add</span>
+</div>
+</div>
+<div class="text-center relative z-10 max-w-xs mx-auto">
+<h1 class="text-[32px] font-bold text-gray-900 leading-tight mb-3 tracking-tight">
+                Order in <br/>
+<span class="text-primary drop-shadow-sm">Seconds</span>
+</h1>
+<p class="text-gray-500 text-[16px] leading-relaxed font-normal">
+                Browse menus, customize your meal, and checkout instantly with our streamlined cart.
+            </p>
+</div>
+</div>
+<div class="p-6 w-full relative z-10">
+<button class="w-full btn-primary-gloss h-14 rounded-2xl text-white font-semibold text-[17px] shadow-glass-strong hover:scale-[1.02] active:scale-[0.98] transition-transform flex items-center justify-center gap-2 group">
+            Continue
+            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+
+</body></html>

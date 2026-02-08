@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Welcome Slide 1 Discover</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            background-color: #f2f2f7;background-image: 
+                radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%),
+                radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+            min-height: max(884px, 100dvh);
+            color: #1c1c1e;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-atom {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .glass-btn:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.6);
+        }
+        .mesh-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 220, 200, 0.6), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(200, 230, 255, 0.6), transparent 40%);
+        }
+    </style>
+<style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased">
+<div class="w-full max-w-md glass-panel min-h-screen flex flex-col relative overflow-hidden rounded-none sm:rounded-[3.5rem] sm:my-8 sm:h-[95vh] sm:border-[1px] sm:border-white/60 ring-1 ring-white/40 shadow-2xl">
+<div class="mesh-bg"></div>
+<div class="absolute top-[-10%] left-[-10%] w-[120%] h-[50%] bg-primary/10 rounded-full blur-[100px] pointer-events-none mix-blend-multiply"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[120%] h-[50%] bg-blue-400/10 rounded-full blur-[100px] pointer-events-none mix-blend-multiply"></div>
+<div class="absolute top-0 w-full z-50 p-6 pt-12 flex justify-end">
+<button class="text-[15px] font-medium text-gray-500 hover:text-gray-900 transition-colors px-4 py-2 rounded-full hover:bg-white/30 backdrop-blur-sm">
+            Skip
+        </button>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center p-8 relative z-10 pt-20 pb-32">
+<div class="flex gap-2 mb-10">
+<div class="h-2 w-2 rounded-full bg-primary shadow-glow"></div>
+<div class="h-2 w-2 rounded-full bg-black/10 backdrop-blur-sm border border-white/20"></div>
+<div class="h-2 w-2 rounded-full bg-black/10 backdrop-blur-sm border border-white/20"></div>
+</div>
+<div class="relative w-full aspect-square max-w-[400px] mb-10">
+<div class="absolute inset-0 bg-gradient-to-tr from-orange-200/40 to-blue-200/40 rounded-[3rem] blur-2xl transform rotate-3 scale-95 opacity-70"></div>
+<div class="relative w-full h-full glass-atom rounded-[2.5rem] p-4 shadow-glass-strong overflow-hidden flex flex-wrap gap-2 content-center justify-center">
+<div class="w-[45%] h-[45%] rounded-2xl overflow-hidden relative group">
+<img alt="Food 1" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOpRE7jqLPJauijPRHwkZrnvVIxWO9ogK1zx9tMh_ePaAiftuhU229n6x7sYRZLLV4SWbc3df8Q8aWYoR1XlJIymSrKJOBA4IeDmeZIxioKWzVEjYFcyzZvGBx25phcsk6Pxs3kBi1gbaSRZeDOMlvUyEDGtbe8viwvUVyqtlMNgsPOeGVOIqhBQ7S26DEGDZvQj11LvabYSsSEyE2Ma9zx9fhk_uvem4QjtWJeFJJzmn0xgwOo5YJuFW4os6qt0jF9YkCHRKgB7k"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+<div class="w-[45%] h-[45%] rounded-2xl overflow-hidden relative group mt-8">
+<img alt="Food 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAalaoTFiIko36FQh6LkuKSoaqcU8Qw9IzOUtIQNupee-XPUjBb3wqjwqX3hlP8W0FPBPA6g2LjjgTZGQ3gUmhI-HOx3fGzsb4eOAcHwVXg5b_j0IdrTnECGM9_cUZ3PwBPioaoHu74l7PhmP8RQLj1GSx0vw2MPOAuTsImShYZTfj3Nc4bQDGqcNpgd62fZDoDjE1gUv7Pj9O6V8-UPlG6Omig8h0pIEOyExVqvH3PMRNhkbBOZUdsOutrFTkN_Kp6ARTAD1cAbwI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+<div class="w-[45%] h-[45%] rounded-2xl overflow-hidden relative group -mt-8">
+<img alt="Food 3" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWO94_20dZM-lK7MiFpk5fSEfqaMEaDMBd2Q1kyosH_RFPyv2HHrKaVa0KAFkejIrU7iGEoT7rWSAOPzf7vHTbJA7-tO1ezplq0JGmCMDgwUlI2AtJI1Bc3eMIX9NHX7VTYnTKKTa077RKDOkopugkEWYtKs5n-83yB6wKrHuvS99D40rYj5Gtg4VRiEz_9D_1fOMAdG7A3w7ipujWcu2otlgaKVCDCh1RqdaNAxKcWZovwuwcHVDLVRqiTmpuvYfebYLftDzVSW0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+<div class="w-[45%] h-[45%] rounded-2xl overflow-hidden relative group">
+<img alt="Food 4" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAYLu2WUhAibMP_QQkgdLqN_8N54lvdiCT5R003e8FdnG3WRJ3OKljrt4et_TeE4cB6lD0jiHgbZ2NKv-Kt5RBFJfjBV_MdXVOYEI3npiTNVCpwruidVeoqR01Edn0QpWXt7pBFyJkUlYGAwkw8ucKNh-9IuTxYG08V7mHt2ond3s2jrgLbBVXfgMB0CT2OceWjESiZJO50KnuQrDYSzuhsmODGcmPjN4_WcS8BVwX94evG9RCEFJ5xa8Hgh6ECmimUz6RCZHWgks"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none rounded-[2.5rem]"></div>
+</div>
+</div>
+<div class="text-center space-y-3 max-w-[80%] mx-auto">
+<h1 class="text-[24px] font-semibold text-gray-900 tracking-tight leading-tight">
+                Discover Amazing Food
+            </h1>
+<p class="text-[15px] text-gray-500 font-normal leading-relaxed">
+                Find the best local restaurants and dishes delivered straight to your doorstep in minutes.
+            </p>
+</div>
+</div>
+<div class="absolute bottom-0 w-full p-8 pb-10 flex flex-col items-center gap-6 z-20 bg-gradient-to-t from-white/40 via-white/10 to-transparent">
+<button class="glass-btn w-full py-4 rounded-2xl flex items-center justify-center gap-2 group hover:bg-white/60">
+<span class="text-[17px] font-semibold text-gray-900">Next</span>
+<span class="material-symbols-outlined text-[20px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</button>
+<div class="flex items-center gap-1 text-[13px]">
+<span class="text-gray-500">Already have an account?</span>
+<a class="font-semibold text-primary hover:text-orange-600 transition-colors" href="#">Sign In</a>
+</div>
+</div>
+</div>
+
+</body></html>

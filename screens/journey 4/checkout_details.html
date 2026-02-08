@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout Order Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            background-color: #f2f2f7;background-image: 
+                radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%),
+                radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+            min-height: max(884px, 100dvh);
+            color: #1c1c1e;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-atom {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .glass-chip {
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .glass-chip-selected {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 94, 43, 0.2);
+            box-shadow: 0 4px 12px rgba(255, 94, 43, 0.15);
+            color: #FF5E2B;
+        }
+        .glass-input {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+            backdrop-filter: blur(10px);
+        }
+        .btn-primary-gloss {
+            background: linear-gradient(180deg, #FF7A45 0%, #FF5E2B 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 14px rgba(255, 94, 43, 0.35);
+            border: 0.5px solid rgba(255, 94, 43, 0.1);
+        }
+        .mesh-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 220, 200, 0.6), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(200, 230, 255, 0.6), transparent 40%);
+        }
+        .number-badge {
+            font-feature-settings: "tnum";
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased">
+<div class="w-full max-w-md glass-panel min-h-screen flex flex-col relative overflow-hidden rounded-none sm:rounded-[3.5rem] sm:my-8 sm:h-[95vh] sm:border-[1px] sm:border-white/60 ring-1 ring-white/40 shadow-2xl">
+<div class="mesh-bg"></div>
+<div class="sticky top-0 z-50 border-b border-white/20 bg-white/70 backdrop-blur-xl">
+<div class="flex items-center p-4 pb-3 justify-between">
+<button class="text-blue-500 hover:text-blue-600 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+<span class="material-symbols-outlined font-normal">arrow_back_ios_new</span>
+</button>
+<h2 class="text-black text-[17px] font-semibold leading-tight tracking-[-0.01em] text-center">Checkout</h2>
+<div class="w-10"></div> 
+</div>
+</div>
+<div class="flex-1 overflow-y-auto pb-32 no-scrollbar px-5 pt-6">
+<div class="space-y-6">
+<div class="glass-atom p-5 rounded-[2rem] shadow-glass-strong">
+<div class="flex items-center gap-3 mb-4">
+<div class="size-8 rounded-full bg-black text-white flex items-center justify-center font-bold text-sm shadow-lg number-badge">1</div>
+<h3 class="text-lg font-bold text-gray-900">Delivery Details</h3>
+</div>
+<div class="space-y-4">
+<div class="glass-chip p-4 rounded-2xl relative overflow-hidden group hover:bg-white/40 transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-gray-500 text-[20px]">home</span>
+<span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Home</span>
+</div>
+<span class="text-primary text-[13px] font-semibold">Edit</span>
+</div>
+<p class="text-[15px] font-semibold text-gray-900 leading-snug">245 Highland Ave, Apt 4B</p>
+<p class="text-[13px] text-gray-500 mt-0.5">San Francisco, CA 94110</p>
+</div>
+<div class="space-y-2">
+<label class="text-[11px] font-semibold text-gray-500 uppercase tracking-widest ml-1">Delivery Instructions</label>
+<textarea class="glass-input w-full rounded-xl p-3 text-[14px] text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-primary/20 focus:border-primary/20 transition-all resize-none" placeholder="Gate code, drop-off details..." rows="2"></textarea>
+</div>
+<div class="flex items-center justify-between p-1">
+<label class="flex items-center cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary/20 bg-white/50 border-gray-300/50 size-4" type="checkbox"/>
+<span class="ml-2.5 text-[14px] font-medium text-gray-700 group-hover:text-gray-900">Leave at door</span>
+</label>
+<label class="flex items-center cursor-pointer group">
+<input checked="" class="rounded text-primary focus:ring-primary/20 bg-white/50 border-gray-300/50 size-4" type="checkbox"/>
+<span class="ml-2.5 text-[14px] font-medium text-gray-700 group-hover:text-gray-900">Priority (+ $1.99)</span>
+</label>
+</div>
+</div>
+</div>
+<div class="glass-atom p-4 rounded-[1.5rem] shadow-sm flex items-center justify-between cursor-pointer hover:bg-white/60 transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-white/60 text-gray-400 flex items-center justify-center font-bold text-sm border border-white number-badge">2</div>
+<div>
+<h3 class="text-[15px] font-semibold text-gray-900">Payment Method</h3>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="text-[12px] text-gray-500 font-medium">Apple Pay</span>
+<span class="size-1 rounded-full bg-gray-300"></span>
+<span class="text-[12px] text-gray-500">**** 4242</span>
+</div>
+</div>
+</div>
+<div class="size-6 rounded-full bg-green-500 flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<div class="glass-atom p-5 rounded-[2rem] shadow-glass-strong">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-white/60 text-gray-400 flex items-center justify-center font-bold text-sm border border-white number-badge">3</div>
+<h3 class="text-lg font-bold text-gray-900">Tip Your Dasher</h3>
+</div>
+<span class="text-[13px] text-gray-500 font-medium">100% goes to driver</span>
+</div>
+<div class="grid grid-cols-4 gap-2 mb-2">
+<button class="glass-chip py-3 rounded-xl flex flex-col items-center justify-center gap-0.5 transition-all hover:bg-white/50 active:scale-95">
+<span class="text-[13px] font-bold text-gray-900">10%</span>
+<span class="text-[10px] text-gray-500">$3.45</span>
+</button>
+<button class="glass-chip py-3 rounded-xl flex flex-col items-center justify-center gap-0.5 transition-all hover:bg-white/50 active:scale-95">
+<span class="text-[13px] font-bold text-gray-900">15%</span>
+<span class="text-[10px] text-gray-500">$5.15</span>
+</button>
+<button class="glass-chip-selected py-3 rounded-xl flex flex-col items-center justify-center gap-0.5 transition-all active:scale-95 relative z-10">
+<span class="text-[13px] font-bold">18%</span>
+<span class="text-[10px] opacity-80">$6.20</span>
+</button>
+<button class="glass-chip py-3 rounded-xl flex flex-col items-center justify-center gap-0.5 transition-all hover:bg-white/50 active:scale-95">
+<span class="text-[13px] font-bold text-gray-900">20%</span>
+<span class="text-[10px] text-gray-500">$6.90</span>
+</button>
+</div>
+<button class="w-full text-center text-[12px] font-medium text-primary mt-2 hover:underline">Enter custom amount</button>
+</div>
+<div class="px-2 pb-4">
+<div class="flex justify-between items-center py-1">
+<span class="text-[14px] text-gray-500">Subtotal</span>
+<span class="text-[14px] font-medium text-gray-900">$34.50</span>
+</div>
+<div class="flex justify-between items-center py-1">
+<span class="text-[14px] text-gray-500">Service Fee</span>
+<span class="text-[14px] font-medium text-gray-900">$2.50</span>
+</div>
+<div class="flex justify-between items-center py-1">
+<span class="text-[14px] text-gray-500">Delivery Fee</span>
+<span class="text-[14px] font-medium text-gray-900">$1.99</span>
+</div>
+<div class="flex justify-between items-center py-1">
+<span class="text-[14px] text-gray-500">Tip (18%)</span>
+<span class="text-[14px] font-medium text-gray-900">$6.20</span>
+</div>
+<div class="border-t border-black/5 my-2"></div>
+<div class="flex justify-between items-center">
+<span class="text-[16px] font-bold text-gray-900">Total</span>
+<span class="text-[18px] font-bold text-gray-900">$45.19</span>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 inset-x-0 glass-panel border-t border-white/50 bg-white/70 backdrop-blur-xl pb-8 pt-4 px-5 rounded-t-[2rem] z-50">
+<button class="btn-primary-gloss w-full py-4 rounded-2xl text-white text-[16px] font-bold shadow-lg flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+<span>Place Order</span>
+<span class="text-white/80 mx-1">•</span>
+<span>$47.27</span>
+</button>
+<p class="text-[10px] text-center text-gray-400 mt-3 px-6 leading-tight">By placing your order, you agree to our Terms of Service and Privacy Policy.</p>
+</div>
+</div>
+
+</body></html>

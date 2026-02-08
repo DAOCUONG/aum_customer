@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Restaurant Detail Page</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            background-color: #f2f2f7;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%),
+                radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+            min-height: max(884px, 100dvh);
+            color: #1c1c1e;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-atom {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .glass-item-row {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .btn-primary-gloss {
+            background: linear-gradient(180deg, #FF7A45 0%, #FF5E2B 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 14px rgba(255, 94, 43, 0.35);
+            border: 0.5px solid rgba(255, 94, 43, 0.1);
+        }
+        .mesh-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 220, 200, 0.6), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(200, 230, 255, 0.6), transparent 40%);
+        }
+        .hero-fade-bottom {
+             mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+             -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased">
+<div class="w-full max-w-md glass-panel min-h-screen flex flex-col relative overflow-hidden rounded-none sm:rounded-[3.5rem] sm:my-8 sm:h-[95vh] sm:border-[1px] sm:border-white/60 ring-1 ring-white/40 shadow-2xl">
+<div class="mesh-bg"></div>
+<div class="relative h-72 shrink-0">
+<div class="absolute top-4 left-4 z-20">
+<button class="size-10 rounded-full bg-white/30 backdrop-blur-md hover:bg-white/50 border border-white/40 flex items-center justify-center transition-colors shadow-glass">
+<span class="material-symbols-outlined text-white text-[20px]">arrow_back_ios_new</span>
+</button>
+</div>
+<div class="absolute top-4 right-4 z-20 flex gap-3">
+<button class="size-10 rounded-full bg-white/30 backdrop-blur-md hover:bg-white/50 border border-white/40 flex items-center justify-center transition-colors shadow-glass">
+<span class="material-symbols-outlined text-white text-[20px]">search</span>
+</button>
+<button class="size-10 rounded-full bg-white/30 backdrop-blur-md hover:bg-white/50 border border-white/40 flex items-center justify-center transition-colors shadow-glass group">
+<span class="material-symbols-outlined text-white text-[20px] group-hover:text-red-500 transition-colors">favorite</span>
+</button>
+</div>
+<div class="absolute inset-0 w-full h-full hero-fade-bottom">
+<img alt="Joe's Diner Interior" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCqJfz87jIYdQMhDr76DsElwU3nUdtjJ8fjg4dGt_okqQLBqRM4NaL-3MLDgKdsCvxtBs-olK8VcOJuGiiYKKbDO9pU_d-dgNxWHfyJE5LDqyoFNQ9OQgltb5y-z92Ue5u5vGXLR02vw--omRu1jukhRqiGdJCxcFoza1bIJDcBmZmMthiAJVfmpWEcMY7t2MURTrENJ1T7kWu2najA0Ws5lDPRcW31xYd4K6LLbzZ7X5-7-fDPLmboo3YWQFdbgBgy3zKBg7nYMM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+</div>
+<div class="absolute bottom-6 left-5 right-5 z-10">
+<div class="glass-panel rounded-2xl p-5 shadow-glass-strong backdrop-blur-xl border border-white/50 bg-white/60">
+<div class="flex justify-between items-start">
+<div>
+<h1 class="text-2xl font-bold text-gray-900 leading-tight mb-1">Joe's Diner</h1>
+<div class="flex items-center gap-1.5 text-xs font-medium text-gray-600 mb-2">
+<span class="text-amber-500 material-symbols-outlined text-[16px] filled">star</span>
+<span class="text-gray-900 font-bold">4.8</span>
+<span class="text-gray-400">(1.2k+)</span>
+<span class="mx-1 text-gray-300">•</span>
+<span>American</span>
+<span class="mx-1 text-gray-300">•</span>
+<span>$$</span>
+</div>
+</div>
+<div class="bg-white/80 rounded-lg p-2 flex flex-col items-center justify-center shadow-sm w-16 h-16 shrink-0">
+<span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Time</span>
+<span class="text-sm font-bold text-gray-900">25-35</span>
+<span class="text-[10px] text-gray-500">min</span>
+</div>
+</div>
+<div class="mt-3 flex gap-2">
+<div class="px-2 py-1 rounded-md bg-green-500/10 border border-green-500/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-green-600 text-[14px]">local_offer</span>
+<span class="text-[11px] font-semibold text-green-700">Free Delivery</span>
+</div>
+<div class="px-2 py-1 rounded-md bg-orange-500/10 border border-orange-500/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-orange-600 text-[14px]">verified</span>
+<span class="text-[11px] font-semibold text-orange-700">Top Rated</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sticky top-0 z-40 bg-white/70 backdrop-blur-xl border-b border-white/20">
+<div class="flex px-4 pt-1">
+<button class="flex-1 py-3 text-sm font-semibold text-primary border-b-2 border-primary relative">
+                    Menu
+                    <div class="absolute inset-x-0 -bottom-[1px] h-[2px] bg-primary shadow-[0_0_10px_rgba(255,94,43,0.5)]"></div>
+</button>
+<button class="flex-1 py-3 text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors relative group">
+                    Reviews
+                    <div class="absolute inset-x-0 -bottom-[1px] h-[2px] bg-transparent group-hover:bg-gray-300 transition-colors"></div>
+</button>
+<button class="flex-1 py-3 text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors relative group">
+                    Info
+                    <div class="absolute inset-x-0 -bottom-[1px] h-[2px] bg-transparent group-hover:bg-gray-300 transition-colors"></div>
+</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto pb-28 no-scrollbar scroll-smooth">
+<div class="mt-6 px-5">
+<h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    Popular Items
+                    <span class="material-symbols-outlined text-primary text-[20px]">local_fire_department</span>
+</h3>
+<div class="space-y-4">
+<div class="glass-item-row p-3 rounded-2xl flex gap-3 shadow-sm hover:bg-white/60 transition-colors cursor-pointer group">
+<div class="w-20 h-20 rounded-xl overflow-hidden shrink-0 relative">
+<img alt="Burger" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMMaZNwAeS2n2hOwN_IKV-Yr9P8CPKi3gomoUDOnG58-teDBlg8_ghyqXbJQiWnW-9YXVGfXgyaCyFxZ0XZW5mWBuvV4r1O35gr7q_LNjDmj2qJQJWMhMJqiM4rAI4r3S3s7PHPtMhnxLk1dtVPHgBJh6en84TMcFlNM9Vb6r8im1H0b_a0tFZpDXE5Kjwna3t7I6JATdBvXmzWebE3zj126Tj2ar_qVJNTHCIOwBN1xVhuYI64xnIOxY6uj6xNRy8h1VrnFF3Q1Q"/>
+</div>
+<div class="flex-1 flex flex-col justify-between py-0.5">
+<div>
+<h4 class="font-semibold text-gray-900 leading-snug">Classic Cheeseburger</h4>
+<p class="text-[12px] text-gray-500 leading-snug line-clamp-2 mt-1">Angus beef patty, cheddar, lettuce, tomato, house sauce.</p>
+</div>
+<div class="flex justify-between items-end mt-2">
+<span class="font-bold text-gray-900">$12.50</span>
+<button class="w-8 h-8 rounded-full bg-primary/10 hover:bg-primary text-primary hover:text-white flex items-center justify-center transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="glass-item-row p-3 rounded-2xl flex gap-3 shadow-sm hover:bg-white/60 transition-colors cursor-pointer group">
+<div class="w-20 h-20 rounded-xl overflow-hidden shrink-0 relative">
+<img alt="Pancakes" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO-YM5TGZeIzSXYmE5q9kyuDQqyHJxfmvGX6LC4LKK6v8m0M1a327-yjYu-SUzWGcjllKTY1DFpTDNcK5AmW0T-nTGe6RO5WYF83GiEiw40GY0aD713RTiVjNrm4xY2JUJTHjHijlsIQj28FC9R17OkfuNmu2gLRMXndAM2sUj9BGayURbwI9AhuWyuIhICtH8UC1p0PnTXl1-jVPQ08ycwZLdMdLPn9kINcehAaJ42w4q2W4Osi6PrF1z1vNyLJBhyV85crScjNs"/>
+</div>
+<div class="flex-1 flex flex-col justify-between py-0.5">
+<div>
+<h4 class="font-semibold text-gray-900 leading-snug">Buttermilk Pancakes</h4>
+<p class="text-[12px] text-gray-500 leading-snug line-clamp-2 mt-1">Stack of 3, maple syrup, whipped butter, fresh berries.</p>
+</div>
+<div class="flex justify-between items-end mt-2">
+<span class="font-bold text-gray-900">$9.00</span>
+<button class="w-8 h-8 rounded-full bg-primary/10 hover:bg-primary text-primary hover:text-white flex items-center justify-center transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 px-5">
+<div class="flex items-center justify-between mb-4 sticky top-[50px] z-30 py-2 -mx-5 px-5 backdrop-blur-md bg-white/30 border-y border-white/20">
+<h3 class="text-lg font-bold text-gray-900">Mains</h3>
+<span class="material-symbols-outlined text-gray-400 rotate-180 text-[20px]">expand_more</span>
+</div>
+<div class="space-y-4">
+<div class="glass-item-row p-3 rounded-2xl flex gap-3 shadow-sm hover:bg-white/60 transition-colors cursor-pointer group">
+<div class="w-20 h-20 rounded-xl overflow-hidden shrink-0 relative">
+<img alt="Steak" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZU_Kdv9noaybFuuvW8_JI-9H8KrE-fsgCESKw9SKgiw1VbQELaWAruIB5K74BORpLftj8ggDWkbHL2Al1oUcoLGta-HbA1tphhSnMy36NZaNL-G3ibFTewW1JKA8uTj-b1-0o18EB7-tKi3Xi1O_Tlag6AkNinPMPFCjpy6lEgUwp13O5jyVVKu-kYvFH2R0Z5PmAgo8toW52yfCC4t6b87Q5tEYL4QN3MtnmhAgAWlPysN_azzQ7ZUq0xCnrIsJCKi_q4supNo4"/>
+</div>
+<div class="flex-1 flex flex-col justify-between py-0.5">
+<div>
+<h4 class="font-semibold text-gray-900 leading-snug">Ribeye Steak</h4>
+<p class="text-[12px] text-gray-500 leading-snug line-clamp-2 mt-1">12oz Ribeye, garlic mash, seasonal veggies.</p>
+</div>
+<div class="flex justify-between items-end mt-2">
+<span class="font-bold text-gray-900">$28.00</span>
+<button class="w-8 h-8 rounded-full bg-primary/10 hover:bg-primary text-primary hover:text-white flex items-center justify-center transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="glass-item-row p-3 rounded-2xl flex gap-3 shadow-sm hover:bg-white/60 transition-colors cursor-pointer group">
+<div class="w-20 h-20 rounded-xl overflow-hidden shrink-0 relative">
+<img alt="Pasta" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZaZWXiSxB-h-cL9w_bVXGi3w-UENPx9vWpoJIjW1sjBZNj_4R7pIZibRKDUws8ojSnZ1pK-_dZk_e8_9EjCY7TTKzqnF7JAet1t8LenWs1x-Zdqd3Pyxt1VEYHmUnCS25gZpbuyvgby84qTV9yIMhxHiSCOqGR9FkT0lk1g6WkCJRVuw67qeS30NfTjQuwMIBEReBkHtBDaF7O673HnyOldJDIkaQinyw4c23vFTkhRC1HTILWXeWw-5QgqqmmPXkgc6xU5ZwNgc"/>
+</div>
+<div class="flex-1 flex flex-col justify-between py-0.5">
+<div>
+<h4 class="font-semibold text-gray-900 leading-snug">Chicken Alfredo</h4>
+<p class="text-[12px] text-gray-500 leading-snug line-clamp-2 mt-1">Fettuccine, creamy alfredo sauce, grilled chicken breast.</p>
+</div>
+<div class="flex justify-between items-end mt-2">
+<span class="font-bold text-gray-900">$18.50</span>
+<button class="w-8 h-8 rounded-full bg-primary/10 hover:bg-primary text-primary hover:text-white flex items-center justify-center transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="glass-item-row p-3 rounded-2xl flex gap-3 shadow-sm hover:bg-white/60 transition-colors cursor-pointer group opacity-60">
+<div class="w-20 h-20 rounded-xl overflow-hidden shrink-0 relative grayscale">
+<img alt="Salmon" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD78euCNaHAAqLFdPofG6I9NklDILOS3i8ISIZ3RN-cbbUlZfmxuoDObm3ZFqTK4Urj7NUj_dK0K7k82xe83hrJDeX3ygvFf4NQfTGLwXFALVEjQBncAZJ6Tq1VzdhUowmfv9Ej1jg6AN5ZaBHogwCwq1N5HuOUNQ0vqNBgnyy25SVpBm8kBBzGs-l5e-u956sP4rc23wYUdAaic4oRPl-5iWqX1CDjvisTiL8QoGwkBPWsogKoCOE8fRM14J0PBmXcFzosQqxm7pA"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+<span class="text-white text-[10px] font-bold uppercase tracking-widest border border-white/50 px-2 py-1 rounded bg-black/20 backdrop-blur-sm">Sold Out</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between py-0.5">
+<div>
+<h4 class="font-semibold text-gray-900 leading-snug">Grilled Salmon</h4>
+<p class="text-[12px] text-gray-500 leading-snug line-clamp-2 mt-1">Atlantic salmon, quinoa salad, lemon butter.</p>
+</div>
+<div class="flex justify-between items-end mt-2">
+<span class="font-bold text-gray-500">$22.00</span>
+<button class="w-8 h-8 rounded-full bg-gray-100 text-gray-300 flex items-center justify-center cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="h-10"></div>
+</div>
+<div class="absolute bottom-6 left-0 right-0 px-4 z-50">
+<button class="w-full btn-primary-gloss h-[60px] rounded-2xl flex items-center justify-between px-2 pr-4 shadow-[0_8px_32px_rgba(255,94,43,0.3)] active:scale-[0.98] transition-transform duration-200 backdrop-blur-md">
+<div class="flex items-center gap-3">
+<div class="h-11 w-11 rounded-xl bg-black/20 flex items-center justify-center text-white font-bold text-lg border border-white/20 backdrop-blur-sm">
+                        3
+                    </div>
+<div class="flex flex-col items-start">
+<span class="text-white font-bold text-[15px] leading-tight">View Cart</span>
+<span class="text-white/80 text-[12px] font-medium leading-tight">$34.50</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-white/90">
+<span class="text-[13px] font-semibold">Checkout</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</div>
+</button>
+</div>
+</div>
+
+</body></html>

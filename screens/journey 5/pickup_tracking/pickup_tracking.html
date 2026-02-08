@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pickup Order Status Progress</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            background-color: #f2f2f7;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%),
+                radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+            min-height: max(884px, 100dvh);
+            color: #1c1c1e;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-atom {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .glass-card-opaque {
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+        }
+        .btn-primary-gloss {
+            background: linear-gradient(180deg, #FF7A45 0%, #FF5E2B 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 8px 20px rgba(255, 94, 43, 0.35);
+            border: 0.5px solid rgba(255, 94, 43, 0.1);
+        }
+        .mesh-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 220, 200, 0.6), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(200, 230, 255, 0.6), transparent 40%);
+        }
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 70%, rgba(255,255,255,1) 100%);
+        }
+        .timeline-line {
+            position: absolute;
+            left: 15px;
+            top: 24px;
+            bottom: 24px;
+            width: 2px;
+            background: rgba(0,0,0,0.1);
+            z-index: 0;
+        }
+        .pulse-ring {
+            position: relative;
+        }
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(255, 94, 43, 0.4);
+            animation: pulse-animation 2s infinite;
+            z-index: -1;
+        }
+        @keyframes pulse-animation {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2.5);
+                opacity: 0;
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased">
+<div class="w-full max-w-md glass-panel min-h-screen flex flex-col relative overflow-hidden rounded-none sm:rounded-[3.5rem] sm:my-8 sm:h-[95vh] sm:border-[1px] sm:border-white/60 ring-1 ring-white/40 shadow-2xl">
+<div class="absolute top-0 left-0 w-full h-[45%] z-0">
+<img alt="Joe's Diner Interior" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA0j22lNKxtfqsXNccc3ZVkbnAtmbb8Sij85QbemFv1OWSpkki-N6mRXvsWTLA9b25KUIVdEuaWaV3zSl7DpTkKd-VYdrIxkXDbRKe9VofT0XeyheVRl7_sFW0Op_j_T07NMr3BBHe3QRuHivcKdY5H7s6oFVod3zC5UEfO9Xkh3fY02sJ_Y22L8ZPxOmFMMgyNyCuymBsdVtYg71nDvcYOI9eDaPi8QAtTA4i3GgO_fffRW7e9fmGmEdhdYZ61RGBXdWVTQyf9SI"/>
+<div class="absolute inset-0 hero-overlay"></div>
+</div>
+<div class="sticky top-0 z-50 pt-2 px-4">
+<div class="flex items-center justify-between h-14">
+<button class="bg-white/40 hover:bg-white/60 backdrop-blur-md flex size-10 shrink-0 items-center justify-center rounded-full transition-colors border border-white/40 shadow-sm">
+<span class="material-symbols-outlined font-medium text-[20px]">arrow_back</span>
+</button>
+<h2 class="text-black/80 text-[15px] font-semibold tracking-tight uppercase bg-white/30 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/40">Order #2938</h2>
+<button class="bg-white/40 hover:bg-white/60 backdrop-blur-md flex size-10 shrink-0 items-center justify-center rounded-full transition-colors border border-white/40 shadow-sm">
+<span class="material-symbols-outlined font-medium text-[20px]">more_horiz</span>
+</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar relative z-10 px-6 pt-4 pb-32">
+<div class="text-center mb-8 mt-2">
+<div class="inline-flex items-center justify-center size-16 bg-white/50 backdrop-blur-xl rounded-2xl shadow-glass mb-4 border border-white/60">
+<img alt="Restaurant Logo" class="w-10 h-10 opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfv1ebscDLfGocUxoBkQYuuGU6uYXlweuQIOpsOcO4J4qu8RDuday_GRlT30UdnIJrB7lSxUUs2XZkIWLfrg7ofdoXd1MI6A0bLrNFeXPXJ2dErOZIeVkEAauKyUn2S_lR6054ezARAfwSgRnSMw0Lji53dE5RiLRC5NK-6QV_yByKWumaJAxPN-MsdvVY0_Ez7Xv75VGXNfsmCC9Cf4p3bV1AjbYvx851kEPcvuHCuoNZ38q_6k6ZsOONrDC8p-qbrWTUa0xStkg"/>
+</div>
+<h1 class="text-3xl font-bold text-gray-900 tracking-tight mb-1">Joe's Diner</h1>
+<p class="text-gray-500 font-medium text-sm">American • Burgers • Shakes</p>
+</div>
+<div class="glass-card-opaque p-6 rounded-[2rem] shadow-glass-strong mb-6 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-[50px] pointer-events-none"></div>
+<div class="text-center mb-8">
+<p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Estimated Pickup</p>
+<h2 class="text-4xl font-bold text-gray-900 tracking-tight">Ready in <span class="text-primary">8 min</span></h2>
+<p class="text-sm text-gray-400 mt-2 font-medium">12:45 PM - 12:55 PM</p>
+</div>
+<div class="relative pl-2">
+<div class="timeline-line rounded-full"></div>
+<div class="flex gap-4 items-start mb-8 relative z-10 opacity-50">
+<div class="size-8 rounded-full bg-green-500 flex items-center justify-center shrink-0 shadow-lg shadow-green-500/30 text-white border-[2px] border-white">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+<div class="pt-1">
+<h4 class="font-semibold text-gray-900">Order Confirmed</h4>
+<p class="text-xs text-gray-500 mt-0.5">12:28 PM</p>
+</div>
+</div>
+<div class="flex gap-4 items-start mb-8 relative z-10">
+<div class="size-8 rounded-full bg-primary flex items-center justify-center shrink-0 shadow-lg shadow-primary/30 text-white border-[2px] border-white pulse-ring">
+<span class="material-symbols-outlined text-[16px] animate-spin">sync</span>
+</div>
+<div class="pt-0.5">
+<h4 class="font-bold text-gray-900 text-lg">Preparing Your Food</h4>
+<p class="text-sm text-gray-500 mt-1 leading-snug">The kitchen is working on your order right now.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start relative z-10 opacity-40 grayscale">
+<div class="size-8 rounded-full bg-white flex items-center justify-center shrink-0 shadow-md border border-gray-200">
+<span class="material-symbols-outlined text-[16px] text-gray-400">shopping_bag</span>
+</div>
+<div class="pt-1">
+<h4 class="font-semibold text-gray-900">Ready for Pickup</h4>
+<p class="text-xs text-gray-500 mt-0.5">Est. 12:45 PM</p>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-atom p-4 rounded-[1.5rem] flex items-center gap-4 mb-6 shadow-sm group cursor-pointer transition-colors hover:bg-white/60">
+<div class="size-16 rounded-2xl overflow-hidden shadow-inner border border-white/50 relative shrink-0">
+<img alt="Map Thumbnail" class="w-full h-full object-cover scale-150 grayscale opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkFHy5xAdt3Zs7V4v0eOHRdFPA89NkeOd7OT3XhqTddNm2zBxnu0-Q65QPePUkeUkm1n2lo4F2O80fjXjCxZ50Egb4C_CPWos8-TFj50oBAC5_q5-l30HHWusT6udvFzVdF21TzHZE26VrHCPBe-P_wQTEwD-2Z_7pBMkQHmZTAzOH1IXNrIF-TzhB70zG_rus4nb-tXhg3XhnHtaJNfO6TuTpftX4pQis6ieiRIgwv1lkxei9y8kiSoqvD5pQo8dCxugW_p3dwmQ"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/5">
+<span class="material-symbols-outlined text-primary drop-shadow-md text-[24px] filled">location_on</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-bold text-gray-900 truncate">142 West Street</h3>
+<p class="text-xs text-gray-500 truncate mb-2">New York, NY 10013 • 0.8 mi away</p>
+<div class="flex items-center gap-1 text-primary text-xs font-bold uppercase tracking-wide">
+<span>Get Directions</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</div>
+</div>
+</div>
+<div class="glass-atom p-4 rounded-[1.5rem] mb-4">
+<div class="flex items-center justify-between mb-3">
+<h3 class="font-semibold text-sm text-gray-900">Order Items (3)</h3>
+<span class="text-sm font-bold text-gray-900">$42.50</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<div class="bg-white/60 px-2 py-1 rounded-md text-xs font-bold text-gray-700 shadow-sm border border-white/50">1x</div>
+<span class="text-sm text-gray-600 truncate">Classic Cheeseburger</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="bg-white/60 px-2 py-1 rounded-md text-xs font-bold text-gray-700 shadow-sm border border-white/50">1x</div>
+<span class="text-sm text-gray-600 truncate">Sweet Potato Fries</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="bg-white/60 px-2 py-1 rounded-md text-xs font-bold text-gray-700 shadow-sm border border-white/50">1x</div>
+<span class="text-sm text-gray-600 truncate">Vanilla Milkshake</span>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-gray-200/50 text-center">
+<button class="text-xs font-medium text-primary hover:text-primary/80 transition-colors">View Receipt</button>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-6 pt-0 z-20 bg-gradient-to-t from-white/90 via-white/80 to-transparent">
+<button class="btn-primary-gloss w-full py-4 rounded-2xl text-white font-bold text-[17px] shadow-glass-strong active:scale-[0.98] transition-all flex items-center justify-center gap-2 group relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+<span class="material-symbols-outlined">storefront</span>
+            I'm Here to Pickup
+        </button>
+<div class="mt-4 flex justify-center gap-6">
+<button class="flex flex-col items-center gap-1 group">
+<div class="size-10 rounded-full bg-white/50 backdrop-blur-md flex items-center justify-center shadow-sm border border-white/60 group-hover:bg-white group-hover:scale-110 transition-all text-gray-600">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</div>
+<span class="text-[10px] font-medium text-gray-500">Call</span>
+</button>
+<button class="flex flex-col items-center gap-1 group">
+<div class="size-10 rounded-full bg-white/50 backdrop-blur-md flex items-center justify-center shadow-sm border border-white/60 group-hover:bg-white group-hover:scale-110 transition-all text-gray-600">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</div>
+<span class="text-[10px] font-medium text-gray-500">Support</span>
+</button>
+</div>
+</div>
+</div>
+
+</body></html>

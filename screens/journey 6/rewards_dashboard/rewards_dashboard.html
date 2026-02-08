@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rewards Dashboard Overview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E2B", 
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "glass-surface": "rgba(255, 255, 255, 0.65)",
+                        "glass-surface-highlight": "rgba(255, 255, 255, 0.8)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'xl': '40px',
+                        '2xl': '60px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'glass-strong': '0 12px 48px -4px rgba(0, 0, 0, 0.12)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+                        'glow': '0 0 20px rgba(255, 94, 43, 0.25)',
+                        'button-gloss': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(255, 94, 43, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            background-color: #f2f2f7;background-image: 
+                radial-gradient(at 0% 0%, hsla(28, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 0%, hsla(198, 100%, 88%, 1) 0, transparent 55%), 
+                radial-gradient(at 100% 100%, hsla(339, 100%, 88%, 1) 0, transparent 55%),
+                radial-gradient(at 0% 100%, hsla(180, 100%, 88%, 1) 0, transparent 55%);
+            min-height: max(884px, 100dvh);
+            color: #1c1c1e;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-atom {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .glass-card-gradient {
+            background: linear-gradient(135deg, rgba(255, 148, 114, 0.8) 0%, rgba(242, 112, 156, 0.8) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 15px 35px -5px rgba(242, 112, 156, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+        .glass-lock {
+             background: rgba(255, 255, 255, 0.2);
+             border: 1px solid rgba(255, 255, 255, 0.3);
+             backdrop-filter: blur(4px);
+        }
+        .btn-primary-gloss {
+            background: linear-gradient(180deg, #FF7A45 0%, #FF5E2B 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 14px rgba(255, 94, 43, 0.35);
+            border: 0.5px solid rgba(255, 94, 43, 0.1);
+        }
+        .mesh-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 220, 200, 0.6), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(200, 230, 255, 0.6), transparent 40%);
+        }
+        .progress-bar-bg {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .progress-bar-fill {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-gray-900 min-h-screen flex justify-center selection:bg-primary/20 antialiased">
+<div class="w-full max-w-md glass-panel min-h-screen flex flex-col relative overflow-hidden rounded-none sm:rounded-[3.5rem] sm:my-8 sm:h-[95vh] sm:border-[1px] sm:border-white/60 ring-1 ring-white/40 shadow-2xl">
+<div class="mesh-bg"></div>
+<div class="sticky top-0 z-50 border-b border-white/20 bg-white/60 backdrop-blur-xl">
+<div class="flex items-center p-4 justify-between">
+<button class="text-gray-900 flex size-10 shrink-0 items-center justify-center rounded-full bg-white/40 hover:bg-white/60 transition-colors backdrop-blur-md shadow-sm border border-white/40">
+<span class="material-symbols-outlined font-medium">arrow_back</span>
+</button>
+<h2 class="text-black text-[17px] font-semibold leading-tight tracking-[-0.01em]">Rewards</h2>
+<button class="text-gray-900 flex size-10 shrink-0 items-center justify-center rounded-full bg-white/40 hover:bg-white/60 transition-colors backdrop-blur-md shadow-sm border border-white/40">
+<span class="material-symbols-outlined font-medium">history</span>
+</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto pb-24 no-scrollbar">
+<div class="p-6 relative overflow-hidden mt-2">
+<div class="glass-card-gradient w-full rounded-[2.5rem] p-8 relative overflow-hidden mb-8 group">
+<div class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-gradient-to-br from-white/20 via-transparent to-transparent rotate-45 pointer-events-none group-hover:translate-x-4 transition-transform duration-1000"></div>
+<div class="absolute right-0 top-0 p-6 opacity-30 mix-blend-overlay">
+<span class="material-symbols-outlined text-[120px] leading-none text-white rotate-12">award_star</span>
+</div>
+<div class="relative z-10">
+<p class="text-white/90 text-sm font-medium uppercase tracking-widest mb-1">Total Balance</p>
+<div class="flex items-baseline gap-1 mb-6">
+<h1 class="text-5xl font-bold text-white tracking-tight drop-shadow-sm">2,450</h1>
+<span class="text-xl text-white/90 font-medium">pts</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs text-white font-medium px-1">
+<span>Silver Member</span>
+<span>3,000 for Gold</span>
+</div>
+<div class="h-2.5 w-full rounded-full progress-bar-bg backdrop-blur-sm overflow-hidden">
+<div class="h-full w-[81%] rounded-full progress-bar-fill relative">
+<div class="absolute right-0 top-0 bottom-0 w-2 bg-white blur-[2px]"></div>
+</div>
+</div>
+<p class="text-xs text-white/80 mt-2 font-medium">You need 550 more points to reach Gold status</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between mb-4 px-1">
+<h3 class="text-lg font-bold text-gray-900">Available Rewards</h3>
+<a class="text-primary text-sm font-semibold hover:text-orange-600 transition-colors" href="#">See All</a>
+</div>
+<div class="space-y-4 mb-8">
+<div class="glass-atom p-4 rounded-[1.5rem] flex items-center gap-4 hover:bg-white/60 transition-all duration-300 group">
+<div class="size-16 rounded-2xl bg-gradient-to-br from-orange-100 to-yellow-50 flex items-center justify-center shadow-inner border border-white/50 shrink-0">
+<span class="text-3xl filter drop-shadow-sm">🍔</span>
+</div>
+<div class="flex-1">
+<h4 class="text-[15px] font-bold text-gray-900 leading-tight mb-1">Free Classic Burger</h4>
+<p class="text-xs text-gray-500 font-medium mb-2">Valid for any classic burger</p>
+<div class="flex items-center gap-1 text-primary text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span>1,500 pts</span>
+</div>
+</div>
+<button class="btn-primary-gloss px-4 py-2 rounded-xl text-white text-xs font-bold shadow-lg active:scale-95 transition-transform shrink-0">
+                            Redeem
+                        </button>
+</div>
+<div class="glass-atom p-4 rounded-[1.5rem] flex items-center gap-4 hover:bg-white/60 transition-all duration-300 group">
+<div class="size-16 rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-50 flex items-center justify-center shadow-inner border border-white/50 shrink-0">
+<span class="text-3xl filter drop-shadow-sm">🚚</span>
+</div>
+<div class="flex-1">
+<h4 class="text-[15px] font-bold text-gray-900 leading-tight mb-1">Free Delivery</h4>
+<p class="text-xs text-gray-500 font-medium mb-2">For your next 3 orders</p>
+<div class="flex items-center gap-1 text-primary text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span>500 pts</span>
+</div>
+</div>
+<button class="btn-primary-gloss px-4 py-2 rounded-xl text-white text-xs font-bold shadow-lg active:scale-95 transition-transform shrink-0">
+                            Redeem
+                        </button>
+</div>
+<div class="glass-atom p-4 rounded-[1.5rem] flex items-center gap-4 hover:bg-white/60 transition-all duration-300 group">
+<div class="size-16 rounded-2xl bg-gradient-to-br from-red-100 to-pink-50 flex items-center justify-center shadow-inner border border-white/50 shrink-0">
+<span class="text-3xl filter drop-shadow-sm">🍕</span>
+</div>
+<div class="flex-1">
+<h4 class="text-[15px] font-bold text-gray-900 leading-tight mb-1">$10 Off Pizza</h4>
+<p class="text-xs text-gray-500 font-medium mb-2">Any large pizza order</p>
+<div class="flex items-center gap-1 text-primary text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span>2,000 pts</span>
+</div>
+</div>
+<button class="btn-primary-gloss px-4 py-2 rounded-xl text-white text-xs font-bold shadow-lg active:scale-95 transition-transform shrink-0">
+                            Redeem
+                        </button>
+</div>
+</div>
+<div class="flex items-center justify-between mb-4 px-1 mt-8">
+<h3 class="text-lg font-bold text-gray-900">Unlock Soon</h3>
+</div>
+<div class="space-y-4">
+<div class="glass-lock p-4 rounded-[1.5rem] flex items-center gap-4 relative overflow-hidden grayscale-[0.5] opacity-80">
+<div class="absolute inset-0 bg-white/40 backdrop-blur-[1px] z-10 flex items-center justify-center">
+<div class="bg-white/80 p-2 rounded-full shadow-lg backdrop-blur-md border border-white/60">
+<span class="material-symbols-outlined text-gray-400">lock</span>
+</div>
+</div>
+<div class="size-16 rounded-2xl bg-gray-100 flex items-center justify-center shadow-inner border border-white/50 shrink-0">
+<span class="text-3xl opacity-50">🍱</span>
+</div>
+<div class="flex-1 opacity-60">
+<h4 class="text-[15px] font-bold text-gray-900 leading-tight mb-1">Premium Sushi Set</h4>
+<div class="flex items-center gap-1 text-gray-500 text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span>3,500 pts</span>
+</div>
+</div>
+<button class="bg-gray-200 px-4 py-2 rounded-xl text-gray-400 text-xs font-bold shadow-none cursor-not-allowed shrink-0 pointer-events-none">
+                            Locked
+                        </button>
+</div>
+<div class="glass-lock p-4 rounded-[1.5rem] flex items-center gap-4 relative overflow-hidden grayscale-[0.5] opacity-80">
+<div class="absolute inset-0 bg-white/40 backdrop-blur-[1px] z-10 flex items-center justify-center">
+<div class="bg-white/80 p-2 rounded-full shadow-lg backdrop-blur-md border border-white/60">
+<span class="material-symbols-outlined text-gray-400">lock</span>
+</div>
+</div>
+<div class="size-16 rounded-2xl bg-gray-100 flex items-center justify-center shadow-inner border border-white/50 shrink-0">
+<span class="text-3xl opacity-50">🎂</span>
+</div>
+<div class="flex-1 opacity-60">
+<h4 class="text-[15px] font-bold text-gray-900 leading-tight mb-1">Birthday Special</h4>
+<div class="flex items-center gap-1 text-gray-500 text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span>5,000 pts</span>
+</div>
+</div>
+<button class="bg-gray-200 px-4 py-2 rounded-xl text-gray-400 text-xs font-bold shadow-none cursor-not-allowed shrink-0 pointer-events-none">
+                            Locked
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 w-full bg-white/70 backdrop-blur-xl border-t border-white/40 pb-6 pt-2 px-6 flex justify-between items-center z-50">
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[24px]">search</span>
+<span class="text-[10px] font-medium">Browse</span>
+</button>
+<div class="relative -top-6">
+<button class="size-14 bg-black text-white rounded-full shadow-lg shadow-black/20 flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[24px]">shopping_bag</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 text-primary transition-colors">
+<span class="material-symbols-outlined filled text-[24px]">star</span>
+<span class="text-[10px] font-medium">Rewards</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+</div>
+
+</body></html>
