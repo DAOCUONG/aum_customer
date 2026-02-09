@@ -4,6 +4,7 @@ import '../../../atoms/glass_button.dart';
 import '../../../atoms/glass_section_header.dart';
 import '../../../molecules/glass_delivery_components.dart';
 import '../../../theme/glass_design_system.dart';
+import '../../../../core/routing/app_router.dart';
 
 class CheckoutDetailsScreen extends StatefulWidget {
   const CheckoutDetailsScreen({super.key});
@@ -119,7 +120,7 @@ class _CheckoutDetailsScreenState extends State<CheckoutDetailsScreen> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha:0.5),
-        borderRadius: const BorderRadius.all(cardRadius),
+        borderRadius: cardRadius,
         border: Border.all(color: Colors.white.withValues(alpha:0.6)),
         boxShadow: [glassShadow],
       ),
@@ -265,7 +266,7 @@ class _CheckoutDetailsScreenState extends State<CheckoutDetailsScreen> {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha:0.5),
-          borderRadius: const BorderRadius.all(cardRadius),
+          borderRadius: cardRadius,
           border: Border.all(color: Colors.white.withValues(alpha:0.6)),
         ),
         child: Row(
@@ -351,7 +352,7 @@ class _CheckoutDetailsScreenState extends State<CheckoutDetailsScreen> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha:0.5),
-        borderRadius: const BorderRadius.all(cardRadius),
+        borderRadius: cardRadius,
         border: Border.all(color: Colors.white.withValues(alpha:0.6)),
         boxShadow: [glassShadow],
       ),
@@ -512,7 +513,7 @@ class _CheckoutDetailsScreenState extends State<CheckoutDetailsScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               GlassButton.primary(
-                onPressed: () => context.push('/schedule-delivery'),
+                onPressed: () => context.push(RouteNames.scheduleDelivery),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../ui/theme/glass_theme.dart';
 import '../../../ui/atoms/glass_button.dart';
 import '../../../core/providers/providers.dart';
+import '../../../core/routing/app_router.dart';
 import 'sign_in_notifier.dart';
 import 'sign_in_state.dart';
 
@@ -451,7 +452,8 @@ class _SignInScreenContentState extends ConsumerState<SignInScreenContent> {
         // Forgot password
         TextButton(
           onPressed: () {
-            // TODO: Navigate to forgot password
+            // Navigate to forgot password screen
+            context.go(RouteNames.signIn);
           },
           child: Text(
             'Forgot Password?',
@@ -475,7 +477,7 @@ class _SignInScreenContentState extends ConsumerState<SignInScreenContent> {
                   .read(signInNotifierProvider.notifier)
                   .signIn();
               if (success && mounted) {
-                context.go('/locationPermission');
+                context.go(RouteNames.locationPermission);
               }
             },
       label: 'Sign In',
@@ -547,7 +549,7 @@ class _SignInScreenContentState extends ConsumerState<SignInScreenContent> {
                     final success =
                         await ref.read(signInNotifierProvider.notifier).signInWithGoogle();
                     if (success && mounted) {
-                      context.go('/locationPermission');
+                      context.go(RouteNames.locationPermission);
                     }
                   },
             icon: _buildGoogleIcon(),
@@ -565,7 +567,7 @@ class _SignInScreenContentState extends ConsumerState<SignInScreenContent> {
                     final success =
                         await ref.read(signInNotifierProvider.notifier).signInWithApple();
                     if (success && mounted) {
-                      context.go('/locationPermission');
+                      context.go(RouteNames.locationPermission);
                     }
                   },
             icon: _buildAppleIcon(),

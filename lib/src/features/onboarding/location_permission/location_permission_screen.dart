@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../ui/theme/glass_theme.dart';
 import '../../../ui/atoms/glass_button.dart';
 import '../../../core/providers/providers.dart';
+import '../../../core/routing/app_router.dart';
 import 'location_permission_notifier.dart';
 import 'location_permission_state.dart';
 
@@ -171,7 +172,7 @@ class _LocationPermissionScreenContentState
                         .requestPermission();
 
                     if (granted && mounted) {
-                      context.go('/dietaryPreferences');
+                      context.go(RouteNames.dietaryPreferences);
                     }
                   },
             label: 'Allow Location Access',
@@ -186,7 +187,7 @@ class _LocationPermissionScreenContentState
             onTap: state.isLoading
                 ? null
                 : () {
-                    context.go('/dietaryPreferences');
+                    context.go(RouteNames.dietaryPreferences);
                   },
             child: Container(
               height: 52,

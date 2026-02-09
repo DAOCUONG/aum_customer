@@ -6,6 +6,7 @@ import '../../../ui/atoms/glass_button.dart';
 import '../../../ui/atoms/glass_card.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/providers/providers.dart';
+import '../../../core/routing/app_router.dart';
 import 'onboarding_notifier.dart';
 import 'onboarding_state.dart';
 
@@ -93,7 +94,14 @@ class _OnboardingScreenContentState
                       ),
                       // Skip button
                       TextButton(
-                        onPressed: () => _navigateToSignIn(context),
+                        onPressed: () async {
+                          await ref
+                              .read(onboardingNotifierProvider.notifier)
+                              .completeOnboarding();
+                          if (mounted) {
+                            _navigateToSignIn(context);
+                          }
+                        },
                         child: Text(
                           'Skip',
                           style: TextStyle(
@@ -137,7 +145,7 @@ class _OnboardingScreenContentState
   }
 
   void _navigateToSignIn(BuildContext context) {
-    context.go('/signIn');
+    context.go(RouteNames.signIn);
   }
 
   Widget _buildMeshBackground() {
@@ -163,14 +171,14 @@ class _OnboardingScreenContentState
       child: GlassButton(
         onPressed: state.isLoading
             ? null
-            : () {
+            : () async {
                 if (state.isLastPage) {
-                  ref
+                  await ref
                       .read(onboardingNotifierProvider.notifier)
-                      .completeOnboarding()
-                      .then((_) {
+                      .completeOnboarding();
+                  if (mounted) {
                     _navigateToSignIn(context);
-                  });
+                  }
                 } else {
                   ref.read(onboardingNotifierProvider.notifier).nextPage();
                 }

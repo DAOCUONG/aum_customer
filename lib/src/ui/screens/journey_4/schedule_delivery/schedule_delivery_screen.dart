@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../../atoms/glass_button.dart';
 import '../../../molecules/glass_delivery_components.dart';
 import '../../../theme/glass_design_system.dart';
+import '../../../../core/routing/app_router.dart';
 
 class ScheduleDeliveryScreen extends StatefulWidget {
   const ScheduleDeliveryScreen({super.key});
@@ -209,7 +210,7 @@ class _ScheduleDeliveryScreenState extends State<ScheduleDeliveryScreen> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.blue.shade50.withValues(alpha: 0.45),
-        borderRadius: const BorderRadius.all(cardRadius),
+        borderRadius: cardRadius,
         border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
       ),
       child: Row(
@@ -300,7 +301,7 @@ class _ScheduleDeliveryScreenState extends State<ScheduleDeliveryScreen> {
               ),
               const SizedBox(height: 12),
               GlassButton.primary(
-                onPressed: () => context.push('/order-success'),
+                onPressed: () => context.push(RouteNames.orderSuccess),
                 child: const Center(
                   child: Text(
                     'Confirm Time',

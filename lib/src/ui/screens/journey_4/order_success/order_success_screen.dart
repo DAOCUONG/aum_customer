@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../atoms/glass_button.dart';
 import '../../../theme/glass_design_system.dart';
+import '../../../../core/routing/app_router.dart';
 
 class OrderSuccessScreen extends StatefulWidget {
   const OrderSuccessScreen({super.key});
@@ -205,7 +206,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.4),
-        borderRadius: const BorderRadius.all(largeCardRadius),
+        borderRadius: largeCardRadius,
         border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
       ),
       child: Row(
@@ -272,7 +273,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.4),
-        borderRadius: const BorderRadius.all(largeCardRadius),
+        borderRadius: largeCardRadius,
         border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
       ),
       child: Row(
@@ -347,7 +348,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.4),
-        borderRadius: const BorderRadius.all(largeCardRadius),
+        borderRadius: largeCardRadius,
         border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
       ),
       child: Row(
@@ -424,7 +425,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.4),
-          borderRadius: const BorderRadius.all(largeCardRadius),
+          borderRadius: largeCardRadius,
           border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
         ),
         child: Row(
@@ -525,7 +526,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               GlassButton.primary(
-                onPressed: () => context.go('/'),
+                onPressed: () => context.go(RouteNames.home),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -548,7 +549,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
               ),
               const SizedBox(height: 16),
               TextButton(
-                onPressed: () => context.go('/'),
+                onPressed: () => context.go(RouteNames.home),
                 child: Text(
                   'Return to Home',
                   style: TextStyle(

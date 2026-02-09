@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../ui/atoms/glass_icon_button.dart';
 import '../../ui/molecules/glass_restaurant_info.dart';
-import '../../ui/molecules/glass_menu_item.dart';
+import '../../ui/molecules/glass_cart_item.dart';
 import '../../ui/theme/glass_design_system.dart';
+import '../../core/routing/app_router.dart';
+import 'item_customization_screen.dart';
 
 /// Restaurant Detail Screen
 class RestaurantDetailScreen extends StatefulWidget {
@@ -132,7 +134,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
           GlassFloatingCartButton(
             itemCount: 3,
             totalPrice: '\$34.50',
-            onTap: () => context.push('/cart'),
+            onTap: () => context.push(RouteNames.cart),
           ),
         ],
       ),
@@ -186,13 +188,13 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
               size: 40,
             ),
             const Spacer(),
-            GlassIconButton.surface(
+            GlassIconButton(
               onPressed: () {},
               icon: const Icon(Icons.search, size: 20),
               size: 40,
             ),
             const SizedBox(width: 8),
-            GlassIconButton.surface(
+            GlassIconButton(
               onPressed: () {},
               icon: Icon(
                 Icons.favorite_border,

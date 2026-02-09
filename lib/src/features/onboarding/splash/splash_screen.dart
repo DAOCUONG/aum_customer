@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/providers/providers.dart';
+import '../../../core/routing/app_router.dart';
 
 part 'splash_notifier.dart';
 part 'splash_state.dart';
@@ -43,8 +44,10 @@ class _SplashScreenContentState extends ConsumerState<SplashScreenContent>
       curve: Curves.easeInOut,
     );
 
-    // Start initialization
-    ref.read(splashNotifierProvider.notifier).initialize();
+    // Delay initialization to avoid modifying provider during widget lifecycle
+    Future(() {
+      ref.read(splashNotifierProvider.notifier).initialize();
+    });
   }
 
   @override
@@ -58,11 +61,13 @@ class _SplashScreenContentState extends ConsumerState<SplashScreenContent>
     final state = ref.watch(splashNotifierProvider);
 
     // Navigate when navigation event occurs
-    if (state.navigationEvent != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _handleNavigation(state.navigationEvent!, context);
-        // Clear the navigation event
-        ref.read(splashNotifierProvider.notifier).clearNavigationEvent();
+    final navigationEvent = state.navigationEvent;
+    if (navigationEvent != null) {
+      Future.microtask(() {
+        if (mounted) {
+          _handleNavigation(navigationEvent, context);
+          ref.read(splashNotifierProvider.notifier).clearNavigationEvent();
+        }
       });
     }
 
@@ -73,15 +78,15 @@ class _SplashScreenContentState extends ConsumerState<SplashScreenContent>
 
   void _handleNavigation(SplashNavigationEvent event, BuildContext context) {
     if (event is _ToOnboarding) {
-      context.go('/onboarding');
+      context.go(RouteNames.onboarding);
     } else if (event is _ToSignIn) {
-      context.go('/signIn');
+      context.go(RouteNames.signIn);
     } else if (event is _ToLocationPermission) {
-      context.go('/locationPermission');
+      context.go(RouteNames.locationPermission);
     } else if (event is _ToDietaryPreferences) {
-      context.go('/dietaryPreferences');
+      context.go(RouteNames.dietaryPreferences);
     } else if (event is _ToHome) {
-      context.go('/home');
+      context.go(RouteNames.home);
     }
   }
 

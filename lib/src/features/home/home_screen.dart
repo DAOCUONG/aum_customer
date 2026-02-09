@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../ui/atoms/glass_search_bar.dart';
-import '../../ui/atoms/glass_location_bar.dart';
 import '../../ui/atoms/glass_category_icon.dart';
 import '../../ui/atoms/glass_icon_button.dart';
 import '../../ui/molecules/glass_food_card.dart';
@@ -9,6 +8,7 @@ import '../../ui/molecules/glass_restaurant_card.dart';
 import '../../ui/molecules/glass_bottom_nav.dart';
 import '../../ui/molecules/glass_promo_banner.dart';
 import '../../ui/theme/glass_design_system.dart';
+import '../../core/routing/app_router.dart';
 
 /// Home Screen - Main food ordering screen
 class HomeScreen extends StatefulWidget {
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 12),
                       GlassSearchBar(
                         hintText: 'Restaurants, dishes, or groceries',
-                        onFilterTap: () => context.push('/filter'),
+                        onFilterTap: () => context.push(RouteNames.filter),
                       ),
                     ],
                   ),
@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          GlassIconButton.surface(
+          GlassIconButton(
             onPressed: () {},
             icon: Stack(
               children: [
@@ -232,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(right: 12),
-            GlassFoodCard(
+            child: GlassFoodCard(
               imageUrl: 'https://picsum.photos/200?random=$index',
               name: _foodNames[index],
               restaurant: _restaurantNames[index % 3],
@@ -257,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(right: 12),
-            GlassRestaurantCard(
+            child: GlassRestaurantCard(
               imageUrl: 'https://picsum.photos/200?random=${index + 10}',
               name: _restaurantNames[index % 3],
               cuisine: _cuisines[index % 4],

@@ -63,44 +63,44 @@ const Gradient successGradient = LinearGradient(
 );
 
 // Glass Shadows
-const BoxShadow glassShadow = BoxShadow(
-  color: Color(0x00000000).withOpacity(0.08),
+final BoxShadow glassShadow = BoxShadow(
+  color: Colors.black.withOpacity(0.08),
   blurRadius: 32,
-  offset: Offset(0, 8),
+  offset: const Offset(0, 8),
 );
 
-const BoxShadow glassShadowStrong = BoxShadow(
-  color: Color(0x00000000).withOpacity(0.12),
+final BoxShadow glassShadowStrong = BoxShadow(
+  color: Colors.black.withOpacity(0.12),
   blurRadius: 48,
-  offset: Offset(0, 12),
+  offset: const Offset(0, 12),
 );
 
-const BoxShadow glowShadow = BoxShadow(
+final BoxShadow glowShadow = BoxShadow(
   color: primaryColor.withOpacity(0.25),
   blurRadius: 20,
-  offset: Offset(0, 0),
+  offset: const Offset(0, 0),
 );
 
-const BoxShadow buttonGlossShadow = BoxShadow(
+final BoxShadow buttonGlossShadow = BoxShadow(
   color: Colors.white.withOpacity(0.3),
   blurRadius: 1,
-  offset: Offset(0, 1),
+  offset: const Offset(0, 1),
   spreadRadius: 0,
 );
 
 // Border Radius Constants (matching Tailwind)
-const Radius largeRadius = Radius.circular(56); // 3.5rem
-const Radius cardRadius = Radius.circular(24); // 1.5rem
-const Radius largeCardRadius = Radius.circular(24); // 24px for info cards
-const Radius bannerRadius = Radius.circular(32); // 2rem
-const Radius buttonRadius = Radius.circular(16); // rounded-xl
-const Radius searchBarRadius = Radius.circular(24); // rounded-2xl
-const Radius locationBarRadius = Radius.circular(12); // rounded-xl
-const Radius fullRadius = Radius.circular(9999); // rounded-full
-const Radius categoryIconRadius = Radius.circular(9999); // rounded-full
-const Radius chipRadius = Radius.circular(9999); // rounded-full
-const Radius filterChipRadius = Radius.circular(20); // rounded-full
-const Radius panelRadius = Radius.circular(40); // 2.5rem
+const BorderRadius largeRadius = BorderRadius.all(Radius.circular(56));
+const BorderRadius cardRadius = BorderRadius.all(Radius.circular(24));
+const BorderRadius largeCardRadius = BorderRadius.all(Radius.circular(24));
+const BorderRadius bannerRadius = BorderRadius.all(Radius.circular(32));
+const BorderRadius buttonRadius = BorderRadius.all(Radius.circular(16));
+const BorderRadius searchBarRadius = BorderRadius.all(Radius.circular(24));
+const BorderRadius locationBarRadius = BorderRadius.all(Radius.circular(12));
+const BorderRadius fullRadius = BorderRadius.all(Radius.circular(9999));
+const BorderRadius categoryIconRadius = BorderRadius.all(Radius.circular(9999));
+const BorderRadius chipRadius = BorderRadius.all(Radius.circular(9999));
+const BorderRadius filterChipRadius = BorderRadius.all(Radius.circular(20));
+const BorderRadius panelRadius = BorderRadius.all(Radius.circular(40));
 
 /// Glass decoration for containers
 BoxDecoration glassDecoration({
@@ -201,19 +201,19 @@ InputDecoration glassInputDecoration({
     fillColor: Colors.white.withOpacity(0.6),
     contentPadding: contentPadding,
     border: OutlineInputBorder(
-      borderRadius: searchBarRadius,
+      borderRadius: BorderRadius.circular(24),
       borderSide: BorderSide(
         color: Colors.white.withOpacity(0.5),
       ),
     ),
     enabledBorder: OutlineInputBorder(
-      borderRadius: searchBarRadius,
+      borderRadius: BorderRadius.circular(24),
       borderSide: BorderSide(
         color: Colors.white.withOpacity(0.5),
       ),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: searchBarRadius,
+      borderRadius: BorderRadius.circular(24),
       borderSide: BorderSide(
         color: primaryColor.withOpacity(0.3),
         width: 2,

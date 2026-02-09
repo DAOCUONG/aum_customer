@@ -188,30 +188,33 @@ class _GlassCardState extends State<GlassCard> {
         transform: (_isPressed || widget.isPressed) && isInteractive
             ? Matrix4.translationValues(0, 2, 0)
             : Matrix4.identity(),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (widget.header != null)
-              Padding(
-                padding: effectivePadding,
-                child: widget.header,
-              ),
-            if (widget.header != null && widget.child != null)
-              const SizedBox(height: 8),
-            if (widget.child != null)
-              Padding(
-                padding: effectivePadding,
-                child: widget.child,
-              ),
-            if (widget.footer != null && widget.child != null)
-              const SizedBox(height: 12),
-            if (widget.footer != null)
-              Padding(
-                padding: effectivePadding,
-                child: widget.footer,
-              ),
-          ],
+        child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (widget.header != null)
+                Padding(
+                  padding: effectivePadding,
+                  child: widget.header,
+                ),
+              if (widget.header != null && widget.child != null)
+                const SizedBox(height: 8),
+              if (widget.child != null)
+                Padding(
+                  padding: effectivePadding,
+                  child: widget.child,
+                ),
+              if (widget.footer != null && widget.child != null)
+                const SizedBox(height: 12),
+              if (widget.footer != null)
+                Padding(
+                  padding: effectivePadding,
+                  child: widget.footer,
+                ),
+            ],
+          ),
         ),
       ),
     );

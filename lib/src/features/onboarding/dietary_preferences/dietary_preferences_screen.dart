@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../ui/theme/glass_theme.dart';
 import '../../../ui/atoms/glass_button.dart';
 import '../../../core/providers/providers.dart';
+import '../../../core/routing/app_router.dart';
 import '../../../domain/entities/dietary_preference.dart';
 import 'dietary_preferences_notifier.dart';
 import 'dietary_preferences_state.dart';
@@ -36,8 +37,10 @@ class _DietaryPreferencesScreenContentState
     super.initState();
     _scrollController = ScrollController();
 
-    // Load available preferences
-    ref.read(dietaryPreferencesNotifierProvider.notifier).loadPreferences();
+    // Load available preferences after widget builds
+    Future.microtask(() {
+      ref.read(dietaryPreferencesNotifierProvider.notifier).loadPreferences();
+    });
   }
 
   @override
@@ -169,7 +172,7 @@ class _DietaryPreferencesScreenContentState
           // Skip button
           TextButton(
             onPressed: () {
-              context.go('/home');
+              context.go(RouteNames.home);
             },
             child: Text(
               'Skip',
@@ -387,7 +390,7 @@ class _DietaryPreferencesScreenContentState
                   .savePreferences();
 
               if (success && mounted) {
-                context.go('/home');
+                context.go(RouteNames.home);
               }
             },
       label: 'Continue',

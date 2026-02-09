@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../ui/atoms/glass_icon_button.dart';
 import '../../ui/atoms/glass_quantity_stepper.dart';
-import '../../ui/atoms/glass_promo_input.dart';
 import '../../ui/molecules/glass_cart_item.dart';
 import '../../ui/theme/glass_design_system.dart';
 
@@ -307,13 +306,14 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     String value, {
     bool isBold = false,
     Color? textColor,
+    double fontSize = 14,
   }) {
     return Row(
       children: [
         Text(
           label,
           style: TextStyle(
-            fontSize: isBold ? 17 : 14,
+            fontSize: isBold ? 17 : fontSize,
             fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
             color: textColor ?? textPrimary,
           ),
@@ -322,7 +322,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         Text(
           value,
           style: TextStyle(
-            fontSize: isBold ? 17 : 14,
+            fontSize: isBold ? 17 : fontSize,
             fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
             color: textColor ?? textPrimary,
           ),

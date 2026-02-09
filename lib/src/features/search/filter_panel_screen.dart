@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../ui/atoms/glass_filter_chip.dart';
+import '../../ui/atoms/glass_icon_button.dart';
 import '../../ui/theme/glass_design_system.dart';
 
 /// Filter Panel Screen - Side panel for filtering search results

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../../atoms/glass_button.dart';
 import '../../../molecules/glass_rating_components.dart';
 import '../../../theme/glass_design_system.dart';
+import '../../../../core/routing/app_router.dart';
 
 class OrderRatingScreen extends StatefulWidget {
   const OrderRatingScreen({super.key});
@@ -432,7 +433,7 @@ class _OrderRatingScreenState extends State<OrderRatingScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               GlassButton.primary(
-                onPressed: () => context.push('/rating-detail'),
+                onPressed: () => context.push(RouteNames.ratingDetail),
                 icon: Icons.refresh,
                 label: 'Reorder This Meal',
               ),

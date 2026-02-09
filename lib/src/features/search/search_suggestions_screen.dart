@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../ui/atoms/glass_icon_button.dart';
 import '../../ui/atoms/glass_filter_chip.dart';
 import '../../ui/theme/glass_design_system.dart';
+import '../../core/routing/app_router.dart';
 
 /// Search Suggestions Screen - Shows search history and suggestions
 class SearchSuggestionsScreen extends StatefulWidget {
@@ -278,7 +279,7 @@ class _SearchSuggestionsScreenState extends State<SearchSuggestionsScreen> {
 
   void _onSearchTap(String query) {
     _searchController.text = query;
-    context.push('/search/results?query=$query');
+    context.push('${RouteNames.searchResults}?query=$query');
   }
 
   void _onDeleteTap(int index) {

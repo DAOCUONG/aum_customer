@@ -1,0 +1,5 @@
+{
+  "enabledPlugins": {
+    "image-generator@dair-academy-plugins": true
+  }
+}

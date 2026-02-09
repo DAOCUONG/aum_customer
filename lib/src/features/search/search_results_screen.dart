@@ -4,6 +4,7 @@ import '../../ui/atoms/glass_icon_button.dart';
 import '../../ui/atoms/glass_filter_chip.dart';
 import '../../ui/molecules/glass_restaurant_card.dart';
 import '../../ui/theme/glass_design_system.dart';
+import '../../core/routing/app_router.dart';
 
 /// Search Results Screen - Shows search results with filters
 class SearchResultsScreen extends StatefulWidget {
@@ -184,7 +185,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
             ),
             const SizedBox(width: 12),
             GlassIconButton.transparent(
-              onPressed: () => context.push('/filter'),
+              onPressed: () => context.push(RouteNames.filter),
               icon: const Icon(Icons.tune, size: 20),
               size: 40,
             ),

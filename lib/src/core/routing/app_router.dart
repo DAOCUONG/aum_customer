@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/onboarding/splash/splash_screen.dart';
 import '../../features/onboarding/onboarding/onboarding_screen.dart';
+import '../../features/onboarding/onboarding_discover/onboarding_discover_screen.dart';
 import '../../features/onboarding/sign_in/sign_in_screen.dart';
 import '../../features/onboarding/location_permission/location_permission_screen.dart';
 import '../../features/onboarding/dietary_preferences/dietary_preferences_screen.dart';
@@ -33,6 +34,7 @@ import '../../ui/screens/journey_7/profile_overview/profile_overview_screen.dart
 class RouteNames {
   static const String splash = '/';
   static const String onboarding = '/onboarding';
+  static const String onboardingDiscover = '/onboarding/discover';
   static const String signIn = '/signIn';
   static const String locationPermission = '/locationPermission';
   static const String dietaryPreferences = '/dietaryPreferences';
@@ -71,6 +73,11 @@ final GoRouter appRouter = GoRouter(
       path: RouteNames.onboarding,
       name: RouteNames.onboarding,
       builder: (context, state) => const OnboardingScreen(),
+    ),
+    GoRoute(
+      path: RouteNames.onboardingDiscover,
+      name: RouteNames.onboardingDiscover,
+      builder: (context, state) => const OnboardingDiscoverScreen(),
     ),
     GoRoute(
       path: RouteNames.signIn,

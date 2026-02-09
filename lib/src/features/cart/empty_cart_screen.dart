@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../ui/atoms/glass_icon_button.dart';
 import '../../ui/theme/glass_design_system.dart';
+import '../../core/routing/app_router.dart';
 
 /// Empty Cart Screen
 class EmptyCartScreen extends StatefulWidget {
@@ -126,9 +127,9 @@ class _EmptyCartScreenState extends State<EmptyCartScreen> {
               children: [
                 // Shopping cart icon
                 Icon(
-                  Icons.shopping_cart_off,
+                  Icons.shopping_cart,
                   size: 80,
-                  color: primaryColor.withOpacity(0.3),
+                  color: primaryColor.withValues(alpha: 0.3),
                 ),
               ],
             ),
@@ -162,7 +163,7 @@ class _EmptyCartScreenState extends State<EmptyCartScreen> {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: GestureDetector(
-        onTap: () => context.push('/home'),
+        onTap: () => context.push(RouteNames.home),
         child: Container(
           width: double.infinity,
           height: 56,

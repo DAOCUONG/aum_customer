@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/glass_design_system.dart';
+import 'glass_icon_button.dart';
 
 /// Glass Search Bar - Search input with glass effect
 class GlassSearchBar extends StatelessWidget {

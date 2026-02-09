@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'onboarding_state.dart';
+import '../../../core/routing/app_router.dart';
 import '../../../core/providers/providers.dart';
 
 /// Onboarding screen notifier
