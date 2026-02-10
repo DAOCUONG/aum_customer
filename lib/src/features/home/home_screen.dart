@@ -4,7 +4,6 @@ import '../../ui/atoms/glass_search_bar.dart';
 import '../../ui/atoms/glass_category_icon.dart';
 import '../../ui/atoms/glass_icon_button.dart';
 import '../../ui/molecules/glass_food_card.dart';
-import '../../ui/molecules/glass_restaurant_card.dart';
 import '../../ui/molecules/glass_bottom_nav.dart';
 import '../../ui/molecules/glass_promo_banner.dart';
 import '../../ui/theme/glass_design_system.dart';

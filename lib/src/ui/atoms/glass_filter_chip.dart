@@ -310,3 +310,44 @@ class GlassTrendingChip extends StatelessWidget {
     );
   }
 }
+
+/// Empty State Glass Filter Chip - For showing disabled/empty states
+class GlassEmptyFilterChip extends StatelessWidget {
+  final String label;
+  final IconData? icon;
+
+  const GlassEmptyFilterChip({super.key, required this.label, this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.2),
+        borderRadius: filterChipRadius,
+        border: Border.all(color: Colors.white.withOpacity(0.3)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(
+              icon,
+              size: 16,
+              color: textTertiary,
+            ),
+            const SizedBox(width: 6),
+          ],
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: textTertiary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
