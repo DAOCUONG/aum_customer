@@ -134,6 +134,26 @@ final appRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AppRepositoryRef = AutoDisposeProviderRef<AppRepositoryInterface>;
+String _$homeRepositoryHash() => r'aa257487312510bb1d178fc09fdd1a0e22da8e46';
+
+/// Home repository provider
+///
+/// Copied from [homeRepository].
+@ProviderFor(homeRepository)
+final homeRepositoryProvider =
+    AutoDisposeProvider<HomeRepositoryInterface>.internal(
+      homeRepository,
+      name: r'homeRepositoryProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$homeRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef HomeRepositoryRef = AutoDisposeProviderRef<HomeRepositoryInterface>;
 String _$signInUseCaseHash() => r'e59c9b137934b263b734ac8d80fb0b6d721731fe';
 
 /// Sign in use case provider
@@ -325,5 +345,26 @@ final completeOnboardingUseCaseProvider =
 // ignore: unused_element
 typedef CompleteOnboardingUseCaseRef =
     AutoDisposeProviderRef<CompleteOnboardingUseCase>;
+String _$getHomeDataUseCaseHash() =>
+    r'18831b083422cca4c2c41c501b8f59f615363eae';
+
+/// Get home data use case provider
+///
+/// Copied from [getHomeDataUseCase].
+@ProviderFor(getHomeDataUseCase)
+final getHomeDataUseCaseProvider =
+    AutoDisposeProvider<GetHomeDataUseCase>.internal(
+      getHomeDataUseCase,
+      name: r'getHomeDataUseCaseProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$getHomeDataUseCaseHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef GetHomeDataUseCaseRef = AutoDisposeProviderRef<GetHomeDataUseCase>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

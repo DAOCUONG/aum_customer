@@ -16,6 +16,9 @@ import '../../domain/usecases/get_dietary_preferences_usecase.dart';
 import '../../domain/usecases/save_dietary_preferences_usecase.dart';
 import '../../domain/usecases/request_location_permission_usecase.dart';
 import '../../domain/usecases/complete_onboarding_usecase.dart';
+import '../../features/home/data/repository/home_repository_impl.dart';
+import '../../features/home/domain/repository/home_repository_interface.dart';
+import '../../features/home/domain/usecases/get_home_data_usecase.dart';
 
 part 'providers.g.dart';
 
@@ -63,6 +66,12 @@ AppRepositoryInterface appRepository(AppRepositoryRef ref) {
     preferences: ref.read(preferencesDatasourceProvider),
     secureStorage: ref.read(secureStorageDatasourceProvider),
   );
+}
+
+/// Home repository provider
+@riverpod
+HomeRepositoryInterface homeRepository(HomeRepositoryRef ref) {
+  return HomeRepositoryImpl();
 }
 
 /// Sign in use case provider
@@ -142,5 +151,13 @@ CompleteOnboardingUseCase completeOnboardingUseCase(
     CompleteOnboardingUseCaseRef ref) {
   return CompleteOnboardingUseCase(
     preferencesRepository: ref.read(preferencesRepositoryProvider),
+  );
+}
+
+/// Get home data use case provider
+@riverpod
+GetHomeDataUseCase getHomeDataUseCase(GetHomeDataUseCaseRef ref) {
+  return GetHomeDataUseCase(
+    repository: ref.read(homeRepositoryProvider),
   );
 }

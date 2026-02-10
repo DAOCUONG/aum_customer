@@ -9,7 +9,7 @@ import '../../features/onboarding/onboarding_track/onboarding_track_screen.dart'
 import '../../features/onboarding/sign_in/sign_in_screen.dart';
 import '../../features/onboarding/location_permission/location_permission_screen.dart';
 import '../../features/onboarding/dietary_preferences/dietary_preferences_screen.dart';
-import '../../features/home/home_screen.dart';
+import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/search/search_suggestions_screen.dart';
 import '../../features/search/search_results_screen.dart';
 import '../../features/search/filter_panel_screen.dart';
