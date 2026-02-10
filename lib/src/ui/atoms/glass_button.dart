@@ -192,7 +192,12 @@ class _GlassButtonState extends State<GlassButton> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: widget.isLoading ? null : widget.onPressed,
+          onTap: widget.isLoading
+              ? null
+              : () {
+                  print('DEBUG: GlassButton onTap called, onPressed=${widget.onPressed != null}');
+                  widget.onPressed?.call();
+                },
           onTapDown: isDisabled || widget.isLoading ? null : _handleTapDown,
           onTapUp: isDisabled || widget.isLoading ? null : _handleTapUp,
           onTapCancel: isDisabled || widget.isLoading ? null : _handleTapCancel,

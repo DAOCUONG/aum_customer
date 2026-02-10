@@ -78,7 +78,7 @@ class _SplashScreenContentState extends ConsumerState<SplashScreenContent>
 
   void _handleNavigation(SplashNavigationEvent event, BuildContext context) {
     if (event is _ToOnboarding) {
-      context.go(RouteNames.onboarding);
+      context.go(RouteNames.onboardingDiscover);
     } else if (event is _ToSignIn) {
       context.go(RouteNames.signIn);
     } else if (event is _ToLocationPermission) {

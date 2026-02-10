@@ -3,8 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/onboarding/splash/splash_screen.dart';
-import '../../features/onboarding/onboarding/onboarding_screen.dart';
 import '../../features/onboarding/onboarding_discover/onboarding_discover_screen.dart';
+import '../../features/onboarding/onboarding_order/onboarding_order_screen.dart';
+import '../../features/onboarding/onboarding_track/onboarding_track_screen.dart';
 import '../../features/onboarding/sign_in/sign_in_screen.dart';
 import '../../features/onboarding/location_permission/location_permission_screen.dart';
 import '../../features/onboarding/dietary_preferences/dietary_preferences_screen.dart';
@@ -33,8 +34,9 @@ import '../../ui/screens/journey_7/profile_overview/profile_overview_screen.dart
 /// Route names constants
 class RouteNames {
   static const String splash = '/';
-  static const String onboarding = '/onboarding';
   static const String onboardingDiscover = '/onboarding/discover';
+  static const String onboardingOrder = '/onboarding/order';
+  static const String onboardingTrack = '/onboarding/track';
   static const String signIn = '/signIn';
   static const String locationPermission = '/locationPermission';
   static const String dietaryPreferences = '/dietaryPreferences';
@@ -59,6 +61,12 @@ class RouteNames {
   static const String orderHistory = '/order-history';
   static const String manageAddresses = '/manage-addresses';
   static const String profileOverview = '/profile';
+
+  /// Onboarding journey flow navigation
+  static String get nextRoute {
+    // This can be extended for dynamic routing based on onboarding state
+    return onboardingDiscover;
+  }
 }
 
 /// GoRouter configuration
@@ -70,14 +78,19 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const SplashScreen(),
     ),
     GoRoute(
-      path: RouteNames.onboarding,
-      name: RouteNames.onboarding,
-      builder: (context, state) => const OnboardingScreen(),
-    ),
-    GoRoute(
       path: RouteNames.onboardingDiscover,
       name: RouteNames.onboardingDiscover,
       builder: (context, state) => const OnboardingDiscoverScreen(),
+    ),
+    GoRoute(
+      path: RouteNames.onboardingOrder,
+      name: RouteNames.onboardingOrder,
+      builder: (context, state) => const OnboardingOrderScreen(),
+    ),
+    GoRoute(
+      path: RouteNames.onboardingTrack,
+      name: RouteNames.onboardingTrack,
+      builder: (context, state) => const OnboardingTrackScreen(),
     ),
     GoRoute(
       path: RouteNames.signIn,
