@@ -47,13 +47,17 @@ class _SignInScreenContentState extends ConsumerState<SignInScreenContent> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: _buildBody(context, state),
+      body: WillPopScope(
+        onWillPop: () async {
+          context.pop();
+          return false;
+        },
+        child: _buildBody(context, state),
+      ),
     );
   }
 
   Widget _buildBody(BuildContext context, SignInState state) {
-    final screenSize = MediaQuery.of(context).size;
-
     return Container(
       width: double.infinity,
       height: double.infinity,
