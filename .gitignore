@@ -65,7 +65,7 @@ Cargo.lock
 **/rust_builder/**/build/
 **/rust_builder/**/target/
 **/.cargo-home/
-
+/rust/target
 # Generated files
 *.pdb
 *.dll

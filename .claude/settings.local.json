@@ -23,7 +23,8 @@
       "Bash(done)",
       "Bash(for i in 1 2 3 4 5 6 7)",
       "Bash(do:*)",
-      "Bash(flutter test:*)"
+      "Bash(flutter test:*)",
+      "Bash(find:*)"
     ]
   }
 }

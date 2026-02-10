@@ -1,116 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../ui/atoms/glass_icon_button.dart';
-import '../../ui/atoms/glass_filter_chip.dart';
-import '../../ui/molecules/glass_restaurant_card.dart';
-import '../../ui/theme/glass_design_system.dart';
-import '../../core/routing/app_router.dart';
+
+import '../../../../ui/atoms/glass_icon_button.dart';
+import '../../../../ui/atoms/glass_filter_chip.dart';
+import '../../../../ui/molecules/glass_restaurant_card.dart';
+import '../../../../ui/theme/glass_design_system.dart';
+import '../../../../core/routing/app_router.dart';
+import '../providers/search_notifier.dart';
+import '../providers/filter_notifier.dart';
+import '../providers/search_state.dart';
+import '../widgets/search_loading_widgets.dart';
+import '../widgets/search_empty_state.dart' as empty;
+import '../widgets/search_error_state.dart' as error;
+import '../../domain/entities/search_result.dart';
 
 /// Search Results Screen - Shows search results with filters
-class SearchResultsScreen extends StatefulWidget {
+/// Uses Riverpod for state management
+class SearchResultsScreen extends ConsumerStatefulWidget {
   final String query;
 
   const SearchResultsScreen({super.key, required this.query});
 
   @override
-  State<SearchResultsScreen> createState() => _SearchResultsScreenState();
+  ConsumerState<SearchResultsScreen> createState() => _SearchResultsScreenState();
 }
 
-class _SearchResultsScreenState extends State<SearchResultsScreen> {
+class _SearchResultsScreenState extends ConsumerState<SearchResultsScreen> {
   bool _isListView = true;
 
-  final List<String> _filters = [
-    'Open Now',
-    'Rating 4.5+',
-    'Free Delivery',
-    'Fastest',
-  ];
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(searchNotifierProvider.notifier).search(query: widget.query);
+    });
+  }
 
-  final List<String> _sortOptions = [
-    'Recommended',
-    'Fastest Delivery',
-    'Highest Rated',
-  ];
+  void _onRetry() {
+    ref.read(searchNotifierProvider.notifier).retry();
+  }
 
-  final List<Map<String, dynamic>> _restaurants = [
-    {
-      'name': 'Burger King',
-      'tags': ['American', 'Fast Food', 'Burgers'],
-      'rating': 4.8,
-      'time': '20-30',
-      'fee': 'Free',
-      'image': 'https://picsum.photos/200?random=1',
-    },
-    {
-      'name': 'Pizza Hut',
-      'tags': ['Italian', 'Pizza', 'Pasta'],
-      'rating': 4.5,
-      'time': '25-35',
-      'fee': '\$2.99',
-      'image': 'https://picsum.photos/200?random=2',
-    },
-    {
-      'name': 'McDonald\'s',
-      'tags': ['American', 'Fast Food'],
-      'rating': 4.3,
-      'time': '15-25',
-      'fee': 'Free',
-      'image': 'https://picsum.photos/200?random=3',
-    },
-    {
-      'name': 'Subway',
-      'tags': ['Sandwiches', 'Healthy', 'Fast Food'],
-      'rating': 4.4,
-      'time': '15-20',
-      'fee': '\$1.99',
-      'image': 'https://picsum.photos/200?random=4',
-    },
-    {
-      'name': 'KFC',
-      'tags': ['American', 'Fried Chicken', 'Fast Food'],
-      'rating': 4.6,
-      'time': '20-30',
-      'fee': 'Free',
-      'image': 'https://picsum.photos/200?random=5',
-    },
-  ];
+  void _onClearFilters() {
+    ref.read(filterNotifierProvider.notifier).resetFilters();
+    ref.read(searchNotifierProvider.notifier).clearSearch();
+    ref.read(searchNotifierProvider.notifier).search(query: widget.query);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final searchState = ref.watch(searchNotifierProvider);
+
     return Scaffold(
       backgroundColor: backgroundLight,
       body: Stack(
         children: [
-          // Mesh Background
           _buildMeshBackground(),
           Column(
             children: [
-              // Search Header
               _buildSearchHeader(),
-              // Filter Chips
               _buildFilterChips(),
-              // Toolbar
               _buildToolbar(),
-              // Results
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  child: Column(
-                    children: _restaurants.map((restaurant) {
-                      return GlassRestaurantCardHorizontal(
-                        imageUrl: restaurant['image'] as String,
-                        name: restaurant['name'] as String,
-                        tags: List<String>.from(restaurant['tags'] as List),
-                        rating: restaurant['rating'] as double,
-                        deliveryTime: restaurant['time'] as String,
-                        deliveryFee: restaurant['fee'] as String,
-                        onTap: () {},
-                        onFavoriteTap: () {},
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
+              _buildResultsContent(searchState),
             ],
           ),
         ],
@@ -126,7 +77,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
             center: Alignment.topLeft,
             radius: 1.5,
             colors: [
-              Colors.orange.shade100.withOpacity(0.6),
+              Colors.orange.shade100.withValues(alpha: 0.6),
               backgroundLight,
             ],
           ),
@@ -139,7 +90,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       decoration: BoxDecoration(
-        color: backgroundLight.withOpacity(0.9),
+        color: backgroundLight.withValues(alpha: 0.9),
         borderRadius: const BorderRadius.vertical(
           bottom: Radius.circular(24),
         ),
@@ -157,12 +108,13 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
               child: Container(
                 height: 44,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.6),
+                  color: Colors.white.withValues(alpha: 0.6),
                   borderRadius: locationBarRadius,
-                  border: Border.all(color: Colors.white.withOpacity(0.5)),
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
                 ),
                 child: TextField(
                   readOnly: true,
+                  controller: TextEditingController(text: widget.query),
                   decoration: InputDecoration(
                     hintText: widget.query,
                     prefixIcon: Padding(
@@ -196,17 +148,19 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
   }
 
   Widget _buildFilterChips() {
+    final filterOptions = ['Open Now', 'Rating 4.5+', 'Free Delivery', 'Fastest'];
+
     return SizedBox(
       height: 48,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        itemCount: _filters.length,
+        itemCount: filterOptions.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(right: 8),
             child: GlassFilterChip(
-              label: _filters[index],
+              label: filterOptions[index],
               isSelected: index < 2,
               showClose: index >= 2,
               onTap: () {},
@@ -218,23 +172,24 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
   }
 
   Widget _buildToolbar() {
+    final sortOptions = ['Recommended', 'Fastest Delivery', 'Highest Rated'];
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: Row(
         children: [
-          // Sort Dropdown
           Container(
             height: 40,
             padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.4),
+              color: Colors.white.withValues(alpha: 0.4),
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.white.withOpacity(0.5)),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
             ),
             child: Row(
               children: [
                 Text(
-                  _sortOptions[0],
+                  sortOptions[0],
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -251,12 +206,11 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
             ),
           ),
           const Spacer(),
-          // View Toggle
           Container(
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.4),
+              color: Colors.white.withValues(alpha: 0.4),
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.white.withOpacity(0.5)),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
             ),
             child: Row(
               children: [
@@ -270,7 +224,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                       boxShadow: _isListView
                           ? [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
+                                color: Colors.black.withValues(alpha: 0.05),
                                 blurRadius: 4,
                                 offset: const Offset(0, 2),
                               ),
@@ -294,7 +248,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                       boxShadow: !_isListView
                           ? [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
+                                color: Colors.black.withValues(alpha: 0.05),
                                 blurRadius: 4,
                                 offset: const Offset(0, 2),
                               ),
@@ -312,6 +266,70 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildResultsContent(SearchState state) {
+    if (state is InitialSearchState) {
+      return const SizedBox.shrink();
+    }
+    if (state is LoadingSearchState) {
+      return const Expanded(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          child: SearchResultsSkeleton(),
+        ),
+      );
+    }
+    if (state is EmptySearchState) {
+      return Expanded(
+        child: empty.SearchEmptyState(
+          query: state.query,
+          onClearFilters: _onClearFilters,
+        ),
+      );
+    }
+    if (state is ErrorSearchState) {
+      return Expanded(
+        child: error.SearchErrorState(
+          message: state.message,
+          onRetry: _onRetry,
+        ),
+      );
+    }
+    if (state is SuccessSearchState) {
+      return Expanded(
+        child: _buildResultsList(state.results),
+      );
+    }
+    return const SizedBox.shrink();
+  }
+
+  Widget _buildResultsList(List<SearchResult> results) {
+    if (results.isEmpty) {
+      return empty.SearchEmptyState(
+        query: widget.query,
+        onClearFilters: _onClearFilters,
+      );
+    }
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      child: Column(
+        children: results.map((restaurant) {
+          return GlassRestaurantCardHorizontal(
+            key: ValueKey(restaurant.id),
+            imageUrl: restaurant.imageUrl,
+            name: restaurant.name,
+            tags: restaurant.tags,
+            rating: restaurant.rating,
+            deliveryTime: restaurant.deliveryTime,
+            deliveryFee: restaurant.deliveryFee,
+            onTap: () {},
+            onFavoriteTap: () {},
+          );
+        }).toList(),
       ),
     );
   }
