@@ -105,7 +105,7 @@ class GlassDivider extends StatelessWidget {
                   TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
-                    color: theme.textTertiary,
+                    color: theme.textTertiaryColor,
                     letterSpacing: 0.5,
                   ),
             ),
@@ -123,7 +123,7 @@ class GlassDivider extends StatelessWidget {
   Widget _buildLine(BuildContext context, {double indent = 0}) {
     final theme = GlassTheme.of(context);
     final effectiveColor = color ?? theme.dividerColor;
-    final effectiveGlassColor = glassColor ?? theme.glassBorder;
+    final effectiveGlassColor = glassColor ?? theme.glassBorderColor;
     final effectiveHeight = height ?? (variant == GlassDividerVariant.dotted ? 4 : 10);
 
     switch (variant) {
@@ -354,7 +354,7 @@ class SectionDivider extends StatelessWidget {
             Icon(
               icon,
               size: 18,
-              color: iconColor ?? theme.textTertiary,
+              color: iconColor ?? theme.textTertiaryColor,
             ),
             const SizedBox(width: 8),
           ],
@@ -366,7 +366,7 @@ class SectionDivider extends StatelessWidget {
                     TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
-                      color: theme.textTertiary,
+                      color: theme.textTertiaryColor,
                       letterSpacing: 0.5,
                     ),
               ),

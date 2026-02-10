@@ -109,6 +109,15 @@ class CacheFailure extends Failure {
   }) : super();
 }
 
+/// Not found failures (404 errors)
+class NotFoundFailure extends Failure {
+  const NotFoundFailure({
+    required super.message,
+    super.code,
+    super.stackTrace,
+  }) : super();
+}
+
 /// Unexpected failures (null pointer, type errors)
 class UnexpectedFailure extends Failure {
   const UnexpectedFailure({

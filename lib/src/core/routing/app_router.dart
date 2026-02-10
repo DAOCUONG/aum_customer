@@ -13,9 +13,10 @@ import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/search/presentation/screens/search_suggestions_screen.dart';
 import '../../features/search/presentation/screens/search_results_screen.dart';
 import '../../features/search/presentation/screens/filter_panel_screen.dart';
-import '../../features/restaurant/restaurant_detail_screen.dart';
-import '../../features/cart/shopping_cart_screen.dart';
-import '../../features/cart/empty_cart_screen.dart';
+import '../../features/cart/presentation/screens/restaurant_detail_screen.dart';
+import '../../features/cart/presentation/screens/shopping_cart_screen.dart';
+import '../../features/cart/presentation/screens/empty_cart_screen.dart';
+import '../../features/cart/presentation/screens/item_customization_screen.dart';
 import '../../ui/screens/journey_4/checkout_details/checkout_details_screen.dart';
 import '../../ui/screens/journey_4/schedule_delivery/schedule_delivery_screen.dart';
 import '../../ui/screens/journey_4/order_success/order_success_screen.dart';
@@ -47,6 +48,7 @@ class RouteNames {
   static const String restaurantDetail = '/restaurant';
   static const String cart = '/cart';
   static const String emptyCart = '/cart/empty';
+  static const String itemCustomize = '/item/customize';
   static const String checkoutDetails = '/checkout';
   static const String scheduleDelivery = '/schedule-delivery';
   static const String orderSuccess = '/order-success';
@@ -145,6 +147,13 @@ final GoRouter appRouter = GoRouter(
       path: RouteNames.emptyCart,
       name: RouteNames.emptyCart,
       builder: (context, state) => const EmptyCartScreen(),
+    ),
+    GoRoute(
+      path: RouteNames.itemCustomize,
+      name: RouteNames.itemCustomize,
+      builder: (context, state) => ItemCustomizationScreen(
+        menuItemId: state.uri.queryParameters['id'] ?? '',
+      ),
     ),
     GoRoute(
       path: RouteNames.checkoutDetails,
