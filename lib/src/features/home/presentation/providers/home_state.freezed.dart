@@ -27,6 +27,12 @@ mixin _$HomeState {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )
     loaded,
+    required TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )
+    empty,
     required TResult Function(String message) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -39,6 +45,12 @@ mixin _$HomeState {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )?
     loaded,
+    TResult? Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    empty,
     TResult? Function(String message)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,6 +63,12 @@ mixin _$HomeState {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )?
     loaded,
+    TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    empty,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -59,6 +77,7 @@ mixin _$HomeState {
     required TResult Function(HomeInitial value) initial,
     required TResult Function(HomeLoading value) loading,
     required TResult Function(HomeLoaded value) loaded,
+    required TResult Function(HomeEmpty value) empty,
     required TResult Function(HomeError value) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,6 +85,7 @@ mixin _$HomeState {
     TResult? Function(HomeInitial value)? initial,
     TResult? Function(HomeLoading value)? loading,
     TResult? Function(HomeLoaded value)? loaded,
+    TResult? Function(HomeEmpty value)? empty,
     TResult? Function(HomeError value)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -73,6 +93,7 @@ mixin _$HomeState {
     TResult Function(HomeInitial value)? initial,
     TResult Function(HomeLoading value)? loading,
     TResult Function(HomeLoaded value)? loaded,
+    TResult Function(HomeEmpty value)? empty,
     TResult Function(HomeError value)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -149,6 +170,12 @@ class _$HomeInitialImpl extends HomeInitial {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )
     loaded,
+    required TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )
+    empty,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -165,6 +192,12 @@ class _$HomeInitialImpl extends HomeInitial {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )?
     loaded,
+    TResult? Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    empty,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -181,6 +214,12 @@ class _$HomeInitialImpl extends HomeInitial {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )?
     loaded,
+    TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    empty,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -196,6 +235,7 @@ class _$HomeInitialImpl extends HomeInitial {
     required TResult Function(HomeInitial value) initial,
     required TResult Function(HomeLoading value) loading,
     required TResult Function(HomeLoaded value) loaded,
+    required TResult Function(HomeEmpty value) empty,
     required TResult Function(HomeError value) error,
   }) {
     return initial(this);
@@ -207,6 +247,7 @@ class _$HomeInitialImpl extends HomeInitial {
     TResult? Function(HomeInitial value)? initial,
     TResult? Function(HomeLoading value)? loading,
     TResult? Function(HomeLoaded value)? loaded,
+    TResult? Function(HomeEmpty value)? empty,
     TResult? Function(HomeError value)? error,
   }) {
     return initial?.call(this);
@@ -218,6 +259,7 @@ class _$HomeInitialImpl extends HomeInitial {
     TResult Function(HomeInitial value)? initial,
     TResult Function(HomeLoading value)? loading,
     TResult Function(HomeLoaded value)? loaded,
+    TResult Function(HomeEmpty value)? empty,
     TResult Function(HomeError value)? error,
     required TResult orElse(),
   }) {
@@ -284,6 +326,12 @@ class _$HomeLoadingImpl extends HomeLoading {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )
     loaded,
+    required TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )
+    empty,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -300,6 +348,12 @@ class _$HomeLoadingImpl extends HomeLoading {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )?
     loaded,
+    TResult? Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    empty,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -316,6 +370,12 @@ class _$HomeLoadingImpl extends HomeLoading {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )?
     loaded,
+    TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    empty,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -331,6 +391,7 @@ class _$HomeLoadingImpl extends HomeLoading {
     required TResult Function(HomeInitial value) initial,
     required TResult Function(HomeLoading value) loading,
     required TResult Function(HomeLoaded value) loaded,
+    required TResult Function(HomeEmpty value) empty,
     required TResult Function(HomeError value) error,
   }) {
     return loading(this);
@@ -342,6 +403,7 @@ class _$HomeLoadingImpl extends HomeLoading {
     TResult? Function(HomeInitial value)? initial,
     TResult? Function(HomeLoading value)? loading,
     TResult? Function(HomeLoaded value)? loaded,
+    TResult? Function(HomeEmpty value)? empty,
     TResult? Function(HomeError value)? error,
   }) {
     return loading?.call(this);
@@ -353,6 +415,7 @@ class _$HomeLoadingImpl extends HomeLoading {
     TResult Function(HomeInitial value)? initial,
     TResult Function(HomeLoading value)? loading,
     TResult Function(HomeLoaded value)? loaded,
+    TResult Function(HomeEmpty value)? empty,
     TResult Function(HomeError value)? error,
     required TResult orElse(),
   }) {
@@ -508,6 +571,12 @@ class _$HomeLoadedImpl extends HomeLoaded {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )
     loaded,
+    required TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )
+    empty,
     required TResult Function(String message) error,
   }) {
     return loaded(categories, recommendedFoods, fastDeliveryRestaurants);
@@ -524,6 +593,12 @@ class _$HomeLoadedImpl extends HomeLoaded {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )?
     loaded,
+    TResult? Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    empty,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(categories, recommendedFoods, fastDeliveryRestaurants);
@@ -540,6 +615,12 @@ class _$HomeLoadedImpl extends HomeLoaded {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )?
     loaded,
+    TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    empty,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -555,6 +636,7 @@ class _$HomeLoadedImpl extends HomeLoaded {
     required TResult Function(HomeInitial value) initial,
     required TResult Function(HomeLoading value) loading,
     required TResult Function(HomeLoaded value) loaded,
+    required TResult Function(HomeEmpty value) empty,
     required TResult Function(HomeError value) error,
   }) {
     return loaded(this);
@@ -566,6 +648,7 @@ class _$HomeLoadedImpl extends HomeLoaded {
     TResult? Function(HomeInitial value)? initial,
     TResult? Function(HomeLoading value)? loading,
     TResult? Function(HomeLoaded value)? loaded,
+    TResult? Function(HomeEmpty value)? empty,
     TResult? Function(HomeError value)? error,
   }) {
     return loaded?.call(this);
@@ -577,6 +660,7 @@ class _$HomeLoadedImpl extends HomeLoaded {
     TResult Function(HomeInitial value)? initial,
     TResult Function(HomeLoading value)? loading,
     TResult Function(HomeLoaded value)? loaded,
+    TResult Function(HomeEmpty value)? empty,
     TResult Function(HomeError value)? error,
     required TResult orElse(),
   }) {
@@ -603,6 +687,265 @@ abstract class HomeLoaded extends HomeState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$HomeLoadedImplCopyWith<_$HomeLoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$HomeEmptyImplCopyWith<$Res> {
+  factory _$$HomeEmptyImplCopyWith(
+    _$HomeEmptyImpl value,
+    $Res Function(_$HomeEmptyImpl) then,
+  ) = __$$HomeEmptyImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({
+    List<CategoryEntity> categories,
+    List<FoodEntity> recommendedFoods,
+    List<RestaurantEntity> fastDeliveryRestaurants,
+  });
+}
+
+/// @nodoc
+class __$$HomeEmptyImplCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res, _$HomeEmptyImpl>
+    implements _$$HomeEmptyImplCopyWith<$Res> {
+  __$$HomeEmptyImplCopyWithImpl(
+    _$HomeEmptyImpl _value,
+    $Res Function(_$HomeEmptyImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of HomeState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? categories = null,
+    Object? recommendedFoods = null,
+    Object? fastDeliveryRestaurants = null,
+  }) {
+    return _then(
+      _$HomeEmptyImpl(
+        categories: null == categories
+            ? _value._categories
+            : categories // ignore: cast_nullable_to_non_nullable
+                  as List<CategoryEntity>,
+        recommendedFoods: null == recommendedFoods
+            ? _value._recommendedFoods
+            : recommendedFoods // ignore: cast_nullable_to_non_nullable
+                  as List<FoodEntity>,
+        fastDeliveryRestaurants: null == fastDeliveryRestaurants
+            ? _value._fastDeliveryRestaurants
+            : fastDeliveryRestaurants // ignore: cast_nullable_to_non_nullable
+                  as List<RestaurantEntity>,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$HomeEmptyImpl extends HomeEmpty {
+  const _$HomeEmptyImpl({
+    required final List<CategoryEntity> categories,
+    required final List<FoodEntity> recommendedFoods,
+    required final List<RestaurantEntity> fastDeliveryRestaurants,
+  }) : _categories = categories,
+       _recommendedFoods = recommendedFoods,
+       _fastDeliveryRestaurants = fastDeliveryRestaurants,
+       super._();
+
+  final List<CategoryEntity> _categories;
+  @override
+  List<CategoryEntity> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
+
+  final List<FoodEntity> _recommendedFoods;
+  @override
+  List<FoodEntity> get recommendedFoods {
+    if (_recommendedFoods is EqualUnmodifiableListView)
+      return _recommendedFoods;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_recommendedFoods);
+  }
+
+  final List<RestaurantEntity> _fastDeliveryRestaurants;
+  @override
+  List<RestaurantEntity> get fastDeliveryRestaurants {
+    if (_fastDeliveryRestaurants is EqualUnmodifiableListView)
+      return _fastDeliveryRestaurants;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_fastDeliveryRestaurants);
+  }
+
+  @override
+  String toString() {
+    return 'HomeState.empty(categories: $categories, recommendedFoods: $recommendedFoods, fastDeliveryRestaurants: $fastDeliveryRestaurants)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$HomeEmptyImpl &&
+            const DeepCollectionEquality().equals(
+              other._categories,
+              _categories,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._recommendedFoods,
+              _recommendedFoods,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._fastDeliveryRestaurants,
+              _fastDeliveryRestaurants,
+            ));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    const DeepCollectionEquality().hash(_categories),
+    const DeepCollectionEquality().hash(_recommendedFoods),
+    const DeepCollectionEquality().hash(_fastDeliveryRestaurants),
+  );
+
+  /// Create a copy of HomeState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$HomeEmptyImplCopyWith<_$HomeEmptyImpl> get copyWith =>
+      __$$HomeEmptyImplCopyWithImpl<_$HomeEmptyImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )
+    loaded,
+    required TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )
+    empty,
+    required TResult Function(String message) error,
+  }) {
+    return empty(categories, recommendedFoods, fastDeliveryRestaurants);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    loaded,
+    TResult? Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    empty,
+    TResult? Function(String message)? error,
+  }) {
+    return empty?.call(categories, recommendedFoods, fastDeliveryRestaurants);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    loaded,
+    TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    empty,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (empty != null) {
+      return empty(categories, recommendedFoods, fastDeliveryRestaurants);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(HomeInitial value) initial,
+    required TResult Function(HomeLoading value) loading,
+    required TResult Function(HomeLoaded value) loaded,
+    required TResult Function(HomeEmpty value) empty,
+    required TResult Function(HomeError value) error,
+  }) {
+    return empty(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(HomeInitial value)? initial,
+    TResult? Function(HomeLoading value)? loading,
+    TResult? Function(HomeLoaded value)? loaded,
+    TResult? Function(HomeEmpty value)? empty,
+    TResult? Function(HomeError value)? error,
+  }) {
+    return empty?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HomeInitial value)? initial,
+    TResult Function(HomeLoading value)? loading,
+    TResult Function(HomeLoaded value)? loaded,
+    TResult Function(HomeEmpty value)? empty,
+    TResult Function(HomeError value)? error,
+    required TResult orElse(),
+  }) {
+    if (empty != null) {
+      return empty(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class HomeEmpty extends HomeState {
+  const factory HomeEmpty({
+    required final List<CategoryEntity> categories,
+    required final List<FoodEntity> recommendedFoods,
+    required final List<RestaurantEntity> fastDeliveryRestaurants,
+  }) = _$HomeEmptyImpl;
+  const HomeEmpty._() : super._();
+
+  List<CategoryEntity> get categories;
+  List<FoodEntity> get recommendedFoods;
+  List<RestaurantEntity> get fastDeliveryRestaurants;
+
+  /// Create a copy of HomeState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$HomeEmptyImplCopyWith<_$HomeEmptyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -684,6 +1027,12 @@ class _$HomeErrorImpl extends HomeError {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )
     loaded,
+    required TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )
+    empty,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -700,6 +1049,12 @@ class _$HomeErrorImpl extends HomeError {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )?
     loaded,
+    TResult? Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    empty,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -716,6 +1071,12 @@ class _$HomeErrorImpl extends HomeError {
       List<RestaurantEntity> fastDeliveryRestaurants,
     )?
     loaded,
+    TResult Function(
+      List<CategoryEntity> categories,
+      List<FoodEntity> recommendedFoods,
+      List<RestaurantEntity> fastDeliveryRestaurants,
+    )?
+    empty,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -731,6 +1092,7 @@ class _$HomeErrorImpl extends HomeError {
     required TResult Function(HomeInitial value) initial,
     required TResult Function(HomeLoading value) loading,
     required TResult Function(HomeLoaded value) loaded,
+    required TResult Function(HomeEmpty value) empty,
     required TResult Function(HomeError value) error,
   }) {
     return error(this);
@@ -742,6 +1104,7 @@ class _$HomeErrorImpl extends HomeError {
     TResult? Function(HomeInitial value)? initial,
     TResult? Function(HomeLoading value)? loading,
     TResult? Function(HomeLoaded value)? loaded,
+    TResult? Function(HomeEmpty value)? empty,
     TResult? Function(HomeError value)? error,
   }) {
     return error?.call(this);
@@ -753,6 +1116,7 @@ class _$HomeErrorImpl extends HomeError {
     TResult Function(HomeInitial value)? initial,
     TResult Function(HomeLoading value)? loading,
     TResult Function(HomeLoaded value)? loaded,
+    TResult Function(HomeEmpty value)? empty,
     TResult Function(HomeError value)? error,
     required TResult orElse(),
   }) {

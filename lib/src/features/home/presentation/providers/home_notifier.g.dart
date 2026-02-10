@@ -6,9 +6,17 @@ part of 'home_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$homeNotifierHash() => r'82451794510d9cf943eea320b7eeababca5dd6e5';
+String _$homeNotifierHash() => r'd06f5a88193a651c7a9683e5fe6c5639574fa259';
 
-/// Notifier for managing Home screen state
+/// Notifier for managing Home screen state with proper dependency injection.
+///
+/// Responsibilities:
+/// - Load home data on initialization
+/// - Handle loading, success, and error states
+/// - Provide refresh capability for pull-to-refresh
+/// - Clean up resources on disposal
+///
+/// Dependencies are injected via Riverpod for testability.
 ///
 /// Copied from [HomeNotifier].
 @ProviderFor(HomeNotifier)
