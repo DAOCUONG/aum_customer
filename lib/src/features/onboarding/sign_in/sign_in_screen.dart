@@ -481,7 +481,8 @@ class _SignInScreenContentState extends ConsumerState<SignInScreenContent> {
                   .read(signInNotifierProvider.notifier)
                   .signIn();
               if (success && mounted) {
-                context.go(RouteNames.locationPermission);
+                // TEMP: Navigate to home for testing
+                context.go(RouteNames.home);
               }
             },
       label: 'Sign In',
@@ -553,7 +554,8 @@ class _SignInScreenContentState extends ConsumerState<SignInScreenContent> {
                     final success =
                         await ref.read(signInNotifierProvider.notifier).signInWithGoogle();
                     if (success && mounted) {
-                      context.go(RouteNames.locationPermission);
+                      // TEMP: Navigate to home for testing
+                      context.go(RouteNames.home);
                     }
                   },
             icon: _buildGoogleIcon(),
@@ -571,7 +573,8 @@ class _SignInScreenContentState extends ConsumerState<SignInScreenContent> {
                     final success =
                         await ref.read(signInNotifierProvider.notifier).signInWithApple();
                     if (success && mounted) {
-                      context.go(RouteNames.locationPermission);
+                      // TEMP: Navigate to home for testing
+                      context.go(RouteNames.home);
                     }
                   },
             icon: _buildAppleIcon(),
